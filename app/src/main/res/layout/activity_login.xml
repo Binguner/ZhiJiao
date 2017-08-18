@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_constraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.binguner.zhijiao.UI.LoginActivity">
+    <android.support.v7.widget.Toolbar
+        android:fitsSystemWindows="true"
+        android:id="@+id/logintoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlue">
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <TextView
+        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
+        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
+        app:layout_constraintTop_toTopOf="@+id/login_constraintlayout"
+        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
+        app:layout_constraintVertical_bias="0.25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:text="Welecome"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/username_textinputlayout"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
+        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
+        app:layout_constraintTop_toTopOf="@+id/login_constraintlayout"
+        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
+        android:layout_width="match_parent"
+        app:counterEnabled="true"
+        app:hintTextAppearance="@style/hintAppearance"
+        app:counterMaxLength="10"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/ed_username"
+            android:inputType="number"
+            android:theme="@style/MyEditTextStyle"
+            android:layout_width="match_parent"
+            android:shadowColor="@color/colorBlue"
+            android:textCursorDrawable="@color/colorBlue"
+            android:layout_height="wrap_content"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/password_textinputlayout"
+        android:layout_marginStart="20dp"
+        app:passwordToggleEnabled="true"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
+        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
+        app:layout_constraintTop_toBottomOf="@+id/username_textinputlayout"
+        app:hintTextAppearance="@style/hintAppearance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/ed_password"
+            android:theme="@style/MyEditTextStyle"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:textCursorDrawable="@color/colorBlue"
+            android:layout_height="wrap_content"
+            android:imeActionId="@+id/loginbtn"
+            android:imeOptions="actionGo"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/loginbtn"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textAllCaps="false"
+        android:background="@color/colorGrayAlittle"
+        app:layout_constraintTop_toBottomOf="@+id/password_textinputlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"/>
+
+</android.support.constraint.ConstraintLayout>
