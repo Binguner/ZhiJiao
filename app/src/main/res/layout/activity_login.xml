@@ -6,14 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.binguner.zhijiao.UI.LoginActivity">
-    <android.support.v7.widget.Toolbar
-        android:fitsSystemWindows="true"
-        android:id="@+id/logintoolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBlue">
 
-    </android.support.v7.widget.Toolbar>
 
 
     <TextView
@@ -57,6 +50,7 @@
         android:id="@+id/password_textinputlayout"
         android:layout_marginStart="20dp"
         app:passwordToggleEnabled="true"
+        app:passwordToggleTintMode="src_in"
         android:layout_marginEnd="20dp"
         app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
         app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
@@ -77,14 +71,28 @@
     </android.support.design.widget.TextInputLayout>
     <Button
         android:id="@+id/loginbtn"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:textAllCaps="false"
+        android:background="@color/colorGrayAlittle"
+        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
+        app:layout_constraintEnd_toEndOf="@id/password_textinputlayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Login"/>
+
+    <Button
+        android:id="@+id/canclebtn"
+        android:layout_marginBottom="80dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:textAllCaps="false"
         android:background="@color/colorGrayAlittle"
-        app:layout_constraintTop_toBottomOf="@+id/password_textinputlayout"
-        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
+        app:layout_constraintRight_toLeftOf="@+id/loginbtn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Login"/>
+        android:text="Cancle"/>
 
 </android.support.constraint.ConstraintLayout>
