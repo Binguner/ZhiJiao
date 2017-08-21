@@ -1,6 +1,7 @@
 package com.example.binguner.zhijiao.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.binguner.zhijiao.R;
+import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
+import com.example.binguner.zhijiao.UI.FooterView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +49,15 @@ public class AchieveFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(),"成绩查询",Toast.LENGTH_SHORT).show();
+                //TYUTUtils tyutUtils = new TYUTUtils();
+                //tyutUtils.getAnnouncements();
+                try {
+                    Intent intent = new Intent(getContext(), FooterView.class);
+                    startActivity(intent);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
         });
         btn_achieve_studentgpa.setOnClickListener(new View.OnClickListener() {

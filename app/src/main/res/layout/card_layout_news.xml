@@ -5,6 +5,7 @@
     android:paddingTop="10dp"
     android:layout_height="70dp"
     android:paddingStart="30dp"
+    android:clickable="true"
     android:paddingEnd="30dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -12,10 +13,12 @@
             android:id="@+id/card_layout_news_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="2"
             android:textColor="@color/colorBlack"
             android:text="校外访问综合教务系统vpn插件下载"/>
 
         <TextView
+            android:id="@+id/card_layout_news_time"
             app:layout_constraintBottom_toBottomOf="@+id/card_layout_news_constraintlayout"
             app:layout_constraintEnd_toEndOf="@+id/card_layout_news_constraintlayout"
             android:layout_marginBottom="10dp"

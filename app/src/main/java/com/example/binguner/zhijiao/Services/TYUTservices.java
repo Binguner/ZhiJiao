@@ -1,0 +1,20 @@
+package com.example.binguner.zhijiao.Services;
+
+import com.example.binguner.zhijiao.Bean.AnnouncementBean;
+
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import rx.Observable;
+
+/**
+ * Created by binguner on 2017/8/20.
+ */
+
+public interface TYUTservices {
+
+    //http://tyut.ngrok.cc/notice/list
+    //获取学校公告
+    @GET("http://tyut.ngrok.cc/notice/list/{page}")
+    Observable<AnnouncementBean> GetAnnouncement(@Path("page") int page);
+
+}

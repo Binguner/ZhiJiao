@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView main_menu_btn;
+    private ImageView main_menu_btn,fishpic;
     private DrawerLayout main_activity_drawerlayout;
     private TabLayout main_tab_layout;
     private NavigationView main_navigationview;
@@ -65,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListener() {
+        fishpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this,"我们只是信息的搬运工",Toast.LENGTH_SHORT).show();
+            }
+        });
         main_menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initId() {
+        fishpic = findViewById(R.id.fishpic);
         apptitle = findViewById(R.id.apptitle);
         main_activity_appbarlayou = findViewById(R.id.main_activity_appbarlayou);
         main_tab_layout = findViewById(R.id.main_tab_layout);

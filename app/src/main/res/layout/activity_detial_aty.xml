@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+
+    tools:context="com.example.binguner.zhijiao.UI.DetialAty">
+
+
+    <android.support.v7.widget.Toolbar
+        android:fitsSystemWindows="true"
+        android:id="@+id/detialToolbar"
+        android:layout_width="match_parent"
+        app:contentInsetStartWithNavigation="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorBlue">
+
+        <TextView
+            android:textSize="20dp"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公告"/>
+
+        <ImageView
+            android:id="@+id/detialsettingpoint"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/point_white_24"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <WebView
+        android:id="@+id/detialWeview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        app:layout_constraintTop_toBottomOf="@+id/detialToolbar"
+        >
+
+    </WebView>
+
+</android.support.constraint.ConstraintLayout>

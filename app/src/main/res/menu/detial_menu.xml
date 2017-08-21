@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/detial_copy_link"
+        android:title="复制链接"
+        app:showAsAction="never"/>
+    <item android:id="@+id/detial_open_in_browsher"
+        android:title="从浏览器打开"
+        app:showAsAction="never"/>
+    <item android:id="@+id/detial_share"
+        android:title="分享"
+        app:showAsAction="never"/>
+
+</menu>

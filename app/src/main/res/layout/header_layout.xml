@@ -6,6 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="196dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/bg1"/>
+        android:src="@mipmap/bg14"/>
 
 </RelativeLayout>
