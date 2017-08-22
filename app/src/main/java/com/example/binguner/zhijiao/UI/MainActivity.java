@@ -3,7 +3,9 @@ package com.example.binguner.zhijiao.UI;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView main_menu_btn,fishpic;
     private DrawerLayout main_activity_drawerlayout;
     private TabLayout main_tab_layout;
+    private CoordinatorLayout main_coordinatorlayout;
     private NavigationView main_navigationview;
     private ViewPager main_viewpager;
     private ArrayList<Fragment> fragments = new ArrayList<>();
@@ -68,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
         fishpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this,"我们只是信息的搬运工",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this,"我们只是信息的搬运工",Toast.LENGTH_SHORT).show();
+                Snackbar.make(main_coordinatorlayout,"我们只是信息的搬运工",Snackbar.LENGTH_SHORT).show();
             }
         });
         main_menu_btn.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initId() {
+        main_coordinatorlayout = findViewById(R.id.main_coordinatorlayout);
         fishpic = findViewById(R.id.fishpic);
         apptitle = findViewById(R.id.apptitle);
         main_activity_appbarlayou = findViewById(R.id.main_activity_appbarlayou);

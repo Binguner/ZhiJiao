@@ -77,7 +77,7 @@ public class WaveView extends View {
         Path path = new Path();
 
         try {
-            φ -= 0.02;
+            φ -= 0.12;
             float y;
 
             path.reset();

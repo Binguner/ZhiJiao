@@ -16,6 +16,9 @@ import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 import com.example.binguner.zhijiao.UI.FooterView;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -64,6 +67,13 @@ public class AchieveFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(),"学分绩点",Toast.LENGTH_SHORT).show();
+                /*String str = "2015/07/20 11:01 来源: 测试";
+                String regex = "\\d{4}[-|/]\\d{2}[-|/]\\d{2} \\d{2}:\\d{2}";
+                Pattern p = Pattern.compile(regex);
+                Matcher matcher = p.matcher(str);
+                if (matcher.find()) {
+                    System.out.println(matcher.group());
+                }*/
             }
         });
         btn_achieve_schedule.setOnClickListener(new View.OnClickListener() {
