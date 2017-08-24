@@ -23,6 +23,7 @@ import com.example.binguner.zhijiao.CallBack.CallBackStatus;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 import com.example.binguner.zhijiao.UI.DetialAty;
+import com.example.binguner.zhijiao.Utils.CircularAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,14 +133,48 @@ public class AnnouncementFragment extends Fragment {
 
         work_announcement_adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, final View view, int position) {
 
-                Toast.makeText(getContext(),"第 "+ position + "个",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), DetialAty.class);
+                //Toast.makeText(getContext(),"第 "+ position + "个",Toast.LENGTH_SHORT).show();
+                final Intent intent = new Intent(getContext(), DetialAty.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("url",infoBeans.get(position).getUrl());
                 intent.putExtras(bundle);
-                startActivity(intent);
+                final View view1 = getLayoutInflater().inflate(R.layout.activity_detial_aty,null);
+                //CircularAnim.show(view1).triggerView(view).go();
+                /*CircularAnim.fullActivity(getActivity(),view)
+                        .colorOrImageRes(R.color.colorBlue)
+                        .duration(300)
+                        .startRadius(100)
+                        //.overridePendingTransition()
+                        .go(new CircularAnim.OnAnimationEndListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                                startActivity(intent);
+                            }
+                        });*/
+                //startActivity(intent);
+
+
+                CircularAnim.hide(view)
+                        .duration(300)
+                        .go(new CircularAnim.OnAnimationEndListener() {
+                            @Override
+                            public void onAnimationEnd() {
+                                CircularAnim.fullActivity(getActivity(),view)
+                                        .colorOrImageRes(R.color.colorBlue)
+                                        .go(new CircularAnim.OnAnimationEndListener() {
+                                            @Override
+                                            public void onAnimationEnd() {
+                                                startActivity(intent);
+                                                view.setVisibility(View.VISIBLE);
+                                            }
+                                        });
+                            }
+                        });
+                //view.animate().rotationBy(90);
+
+
             }
         });
     }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/regular_profession"
+        app:showAsAction="never"
+        android:title="固定岗位"/>
+    <item android:id="@+id/temporary_profession"
+        app:showAsAction="never"
+        android:title="临时岗位"/>
+    <item android:id="@+id/special_profession"
+        app:showAsAction="never"
+        android:title="专业技术岗位"/>
+    <item android:id="@+id/off_campus_profession"
+        app:showAsAction="never"
+        android:title="校外岗"/>
+    <item android:id="@+id/interview_notify"
+        app:showAsAction="never"
+        android:title="面试通知"/>
+    <item android:id="@+id/admit_notify"
+        app:showAsAction="never"
+        android:title="录用公告"/>
+
+
+</menu>

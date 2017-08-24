@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:paddingTop="10dp"
     android:layout_height="70dp"
+    android:foreground="?attr/selectableItemBackground"
     android:paddingStart="30dp"
     android:clickable="true"
     android:paddingEnd="30dp"

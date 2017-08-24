@@ -56,6 +56,25 @@
                         android:textSize="20dp"
                         android:textColor="@color/colorWhite"/>
 
+                    <TextView
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/work_type_name"
+                        android:text="固定岗位"
+                        android:visibility="invisible"
+                        android:textColor="@color/colorWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:id="@+id/work_for_more_btn"
+                        android:visibility="invisible"
+                        android:padding="8dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:layout_marginEnd="2dp"
+                        android:layout_gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/more_white_48"/>
+
                 </android.support.v7.widget.Toolbar>
                 <android.support.design.widget.TabLayout
                     android:id="@+id/main_tab_layout"

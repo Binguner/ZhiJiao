@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.binguner.zhijiao.R;
+import com.example.binguner.zhijiao.View.WaveView;
 
 public class DetialAty extends AppCompatActivity {
 
@@ -29,7 +31,7 @@ public class DetialAty extends AppCompatActivity {
     private String url;
     private android.support.v7.widget.Toolbar detialToolbar;
     private ImageView detialsettingpoint;
-
+    private WaveView detial_waveView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +102,16 @@ public class DetialAty extends AppCompatActivity {
             }
         });
 
-
+        detialWeview.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if(newProgress == 100){
+                    detial_waveView.setVisibility(View.GONE);
+                    detialWeview.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void initViews() {
@@ -125,6 +136,7 @@ public class DetialAty extends AppCompatActivity {
     }
 
     private void initId() {
+        detial_waveView = findViewById(R.id.detial_waveView);
         detialsettingpoint = findViewById(R.id.detialsettingpoint);
         detialToolbar = findViewById(R.id.detialToolbar);
         detialWeview = findViewById(R.id.detialWeview);
