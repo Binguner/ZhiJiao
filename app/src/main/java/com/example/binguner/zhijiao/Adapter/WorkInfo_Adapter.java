@@ -49,7 +49,7 @@ public class WorkInfo_Adapter extends BaseQuickAdapter<WorkBean.InfoBean, WorkIn
         int position = helper.getLayoutPosition();
         Log.d("wtwtwtwtw", "here");
         try {
-            if (item.getApplyStatus().contains("正在报名")) {
+            if (item.getApplyStatus().contains("正在")) {
 
                // helper.card_layout_work_info_type.setTextColor(R.color.colorGreen);
                 helper.card_layout_work_info_type.setTextColor(context.getResources().getColor(R.color.colorGreen));

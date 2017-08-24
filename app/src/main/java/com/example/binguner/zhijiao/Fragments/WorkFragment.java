@@ -272,7 +272,7 @@ public class WorkFragment extends Fragment {
         workInfo_adapter = new WorkInfo_Adapter(R.layout.card_layout_work_info, infoBeans, getContext());
         work_swiperefreshlayout = getActivity().findViewById(R.id.work_swiperefreshlayout);
         work_recyclerview = getActivity().findViewById(R.id.work_recyclerview);
-        tyutUtils = new TYUTUtils(workInfo_adapter);
+        tyutUtils = new TYUTUtils(workInfo_adapter,getContext());
     }
 
     public static void addWorkDatas(List<WorkBean.InfoBean> minfoBeans) {

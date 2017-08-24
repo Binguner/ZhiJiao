@@ -67,7 +67,7 @@ public class AchieveFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(),"学分绩点",Toast.LENGTH_SHORT).show();
-                TYUTUtils tyutUtils = new TYUTUtils();
+                TYUTUtils tyutUtils = new TYUTUtils(getContext());
                 //tyutUtils.getWorkInfo(1);
                 /*String str = "2015/07/20 11:01 来源: 测试";
                 String regex = "\\d{4}[-|/]\\d{2}[-|/]\\d{2} \\d{2}:\\d{2}";

@@ -1,7 +1,10 @@
 package com.example.binguner.zhijiao.UI;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -61,6 +64,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        try{
+            String path = this.getCacheDir().toString();
+            Log.d("filename1",path);
+            SharedPreferences sharedPreferences = this.getSharedPreferences("cachePath", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("cachepath",path);
+            editor.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Log.d("filename",this.getCacheDir()+"");
         View headerView = getLayoutInflater().inflate(R.layout.header_layout, null);
         main_navigationview.addHeaderView(headerView);
 

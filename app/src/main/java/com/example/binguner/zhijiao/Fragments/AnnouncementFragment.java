@@ -60,7 +60,7 @@ public class AnnouncementFragment extends Fragment {
         work_announcement_adapter = new Work_Announcement_Adapter(R.layout.card_layout_news,infoBeans);
         announcement_swiperefreshlayout = getActivity().findViewById(R.id.announcement_swiperefreshlayout);
         announcement_recyclerview = getActivity().findViewById(R.id.announcement_recyclerview);
-        tyutUtils = new TYUTUtils(work_announcement_adapter,announcement_swiperefreshlayout);
+        tyutUtils = new TYUTUtils(work_announcement_adapter,announcement_swiperefreshlayout,getContext());
     }
 
 
