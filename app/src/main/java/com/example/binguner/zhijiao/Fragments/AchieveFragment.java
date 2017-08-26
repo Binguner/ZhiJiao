@@ -2,15 +2,18 @@ package com.example.binguner.zhijiao.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
@@ -31,8 +34,8 @@ public class AchieveFragment extends Fragment {
 
 
     private OnFragmentInteractionListener mListener;
-    private Button btn_achieve_searchgrades,btn_achieve_studentgpa,btn_achieve_schedule,btn_achieve_easyjudge,btn_achieve_studentinfo;
-
+    private Button btn_achieve_searchgrades,btn_achieve_studentgpa,btn_achieve_schedule,btn_achieve_easyjudge,btn_achieve_studentinfo,btn_achieve_grades_ranks;
+    private TYUTUtils tyutUtils;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -54,13 +57,30 @@ public class AchieveFragment extends Fragment {
                 Toast.makeText(getContext(),"成绩查询",Toast.LENGTH_SHORT).show();
                 //TYUTUtils tyutUtils = new TYUTUtils();
                 //tyutUtils.getAnnouncements();
-                try {
+                /*try {
                     Intent intent = new Intent(getContext(), FooterView.class);
                     startActivity(intent);
                 }catch (Exception e){
                     e.printStackTrace();
+                }*/
+
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("username",Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username",null);
+                Log.d("LoginTag",username+"");
+                try {
+                    tyutUtils.GetGrades(username);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
 
+
+
+            }
+        });
+        btn_achieve_grades_ranks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"成绩排名",Toast.LENGTH_SHORT).show();
             }
         });
         btn_achieve_studentgpa.setOnClickListener(new View.OnClickListener() {
@@ -99,11 +119,13 @@ public class AchieveFragment extends Fragment {
     }
 
     private void initId() {
+        btn_achieve_grades_ranks = getView().findViewById(R.id.btn_achieve_grades_ranks);
         btn_achieve_studentinfo = getView().findViewById(R.id.btn_achieve_studentinfo);
         btn_achieve_easyjudge = getView().findViewById(R.id.btn_achieve_easyjudge);
         btn_achieve_schedule = getView().findViewById(R.id.btn_achieve_schedule);
         btn_achieve_studentgpa = getView().findViewById(R.id.btn_achieve_studentgpa);
         btn_achieve_searchgrades = getView().findViewById(R.id.btn_achieve_searchgrades);
+        tyutUtils = new TYUTUtils(getContext());
     }
 
     public AchieveFragment() {

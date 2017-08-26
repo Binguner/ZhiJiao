@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Bean.AnnouncementBean;
+import com.example.binguner.zhijiao.Bean.GradesBean;
+import com.example.binguner.zhijiao.Bean.LoginBean;
 import com.example.binguner.zhijiao.Bean.WorkBean;
 import com.example.binguner.zhijiao.BuildConfig;
 import com.example.binguner.zhijiao.CallBack.CallBackStatus;
@@ -32,6 +34,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -242,4 +245,61 @@ public class TYUTUtils {
                 });
     }
 
+    public void firstLogin(String username,String password){
+        services.FirsrLogin(username,password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<LoginBean>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("LoginTag","Compleded");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("LoginTag","onError: "+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(LoginBean loginBean) {
+                        Log.d("LoginTag",loginBean.getUsername());
+                        Log.d("LoginTag",loginBean.getMessage());
+                        SharedPreferences sharedPreferences = context.getSharedPreferences("username",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username",loginBean.getUsername());
+                        editor.commit();
+                    }
+                });
+    }
+
+    public void GetGrades(String username){
+        services.GetGrades(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("LoginTag","Completed");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("LoginTag",e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody gradesBean) {
+                        //Log.d("LoginTag",gradesBean.getMessage()+"");
+                        //Log.d("LoginTag",gradesBean.getInfo().size()+"");
+                        try {
+                            Log.d("LoginTag",gradesBean.string().toString()+"");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+//                        Log.d("LoginTag",gradesBean.getInfo().get(2).getName()+"");
+//                        Log.d("LoginTag",gradesBean.getInfo().get(1).getName()+"");
+//                        Log.d("LoginTag",gradesBean.getInfo().get(1).getScore()+"");
+                    }
+                });
+    }
 }

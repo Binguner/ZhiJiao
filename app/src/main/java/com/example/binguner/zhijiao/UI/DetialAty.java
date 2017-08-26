@@ -30,7 +30,7 @@ public class DetialAty extends AppCompatActivity {
     private WebView detialWeview;
     private String url;
     private android.support.v7.widget.Toolbar detialToolbar;
-    private ImageView detialsettingpoint;
+    private ImageView detialsettingpoint,detial_back_btn;
     private WaveView detial_waveView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +56,18 @@ public class DetialAty extends AppCompatActivity {
 
 
     private void setListener() {
-        detialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        /*detialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });*/
+        detial_back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
         detialsettingpoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,11 +136,12 @@ public class DetialAty extends AppCompatActivity {
         detialWeview.setWebViewClient(new WebViewClient());
 
         //设置 toolbar
-        detialToolbar.setNavigationIcon(R.mipmap.back_white_48);
+        //detialToolbar.setNavigationIcon(R.mipmap.back_white_48);
 
     }
 
     private void initId() {
+        detial_back_btn = findViewById(R.id.detial_back_btn);
         detial_waveView = findViewById(R.id.detial_waveView);
         detialsettingpoint = findViewById(R.id.detialsettingpoint);
         detialToolbar = findViewById(R.id.detialToolbar);

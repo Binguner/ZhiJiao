@@ -4,14 +4,17 @@
     <color name="colorPrimaryDark">#307fde</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlue">#307fde</color>
+    <color name="colorButtonBlue">#64B5F6</color>
     <color name="colorAlpha">#62ffffff</color>
     <color name="colorYellow">#f5ae07</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="colorBlack">#000000</color>
+    <color name="colorBlack">#2A2A2A</color>
     <color name="colorGray">#999999</color>
     <color name="colorGrayAlittle">#e7e0e0</color>
     <color name="colorGrayLight">#cfcfcf</color>
+    <color name="colorBackGround">#FBFBFB</color>
     <color name="colorRed">#ff0000</color>
     <color name="colorGreen">#008314</color>
+    <color name="colorTransparent">#00ffffff</color>
 
 </resources>

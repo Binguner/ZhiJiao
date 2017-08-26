@@ -12,18 +12,33 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.binguner.zhijiao.R;
+import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button loginbtn,canclebtn;
-    private TextInputLayout username_textinputlayout,password_textinputlayout;
-    private EditText ed_username,ed_password;
-    private String username,password;
+    @BindView(R.id.loginbtn)
+    Button loginbtn;
+    @BindView(R.id.canclebtn)
+    Button canclebtn;
+    @BindView(R.id.username_textinputlayout)
+    TextInputLayout username_textinputlayout;
+    @BindView(R.id.password_textinputlayout)
+    TextInputLayout password_textinputlayout;
+    @BindView(R.id.ed_username)
+    EditText ed_username;
+    @BindView(R.id.ed_password)
+    EditText ed_password;
+    String username,password;
+    TYUTUtils tyutUtils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setTheme(R.style.AppTheme_login);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         initId();
         initViews();
         setListener();
@@ -33,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         canclebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -53,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
                     username_textinputlayout.setErrorEnabled(false);
                     password_textinputlayout.setErrorEnabled(false);
                 }
+                tyutUtils.firstLogin(username,password);
+
+
             }
         });
 
@@ -67,11 +85,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initId() {
-        canclebtn = findViewById(R.id.canclebtn);
-        ed_password = findViewById(R.id.ed_password);
-        ed_username = findViewById(R.id.ed_username);
-        loginbtn = findViewById(R.id.loginbtn);
-        password_textinputlayout = findViewById(R.id.password_textinputlayout);
-        username_textinputlayout = findViewById(R.id.username_textinputlayout);
+        tyutUtils =  new TYUTUtils(this);
     }
 }

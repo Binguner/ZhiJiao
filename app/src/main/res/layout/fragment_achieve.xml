@@ -6,6 +6,7 @@
     android:paddingTop="10dp"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
+    android:background="@color/colorBackGround"
     tools:context="com.example.binguner.zhijiao.Fragments.AchieveFragment">
 
     <android.support.v4.widget.NestedScrollView
@@ -21,13 +22,24 @@
                 android:id="@+id/btn_achieve_searchgrades"
                 android:background="@drawable/main_btn_bg1"
                 android:textSize="30dp"
+                android:textColor="@color/colorWhite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="成绩查询"/>
             <Button
+                android:layout_marginTop="10dp"
+                android:id="@+id/btn_achieve_grades_ranks"
+                android:background="@drawable/main_btn_bg1"
+                android:textSize="30dp"
+                android:textColor="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="成绩排名"/>
+            <Button
                 android:id="@+id/btn_achieve_studentgpa"
                 android:background="@drawable/main_btn_bg1"
                 android:textSize="30dp"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,6 +48,7 @@
                 android:id="@+id/btn_achieve_schedule"
                 android:background="@drawable/main_btn_bg1"
                 android:textSize="30dp"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,6 +57,7 @@
                 android:id="@+id/btn_achieve_easyjudge"
                 android:background="@drawable/main_btn_bg1"
                 android:textSize="30dp"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,6 +66,7 @@
                 android:id="@+id/btn_achieve_studentinfo"
                 android:background="@drawable/main_btn_bg1"
                 android:textSize="30dp"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

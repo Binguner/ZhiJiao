@@ -248,7 +248,7 @@ public class WorkFragment extends Fragment {
             tyutUtils.getWorkInfo(type,page);
         } catch (Exception e) {
             e.printStackTrace();
-            Snackbar.make(getView(), "加载失败，请检查网络。", Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(getView(), "加载失败，请检查网络。", Snackbar.LENGTH_SHORT).show();
         }
 
        /* workInfo_adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

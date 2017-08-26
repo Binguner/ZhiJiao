@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackGround"
     android:fitsSystemWindows="true"
 
     tools:context="com.example.binguner.zhijiao.UI.DetialAty">
@@ -14,8 +15,16 @@
         android:id="@+id/detialToolbar"
         android:layout_width="match_parent"
         app:contentInsetStartWithNavigation="0dp"
+        app:contentInsetStart="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorBlue">
+
+        <ImageView
+            android:padding="10dp"
+            android:id="@+id/detial_back_btn"
+            android:layout_width="40dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/back_white_48"/>
 
         <TextView
             android:textSize="20dp"
@@ -39,6 +48,8 @@
         app:layout_constraintTop_toBottomOf="@+id/detialToolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
     <WebView
         android:id="@+id/detialWeview"
         android:visibility="invisible"

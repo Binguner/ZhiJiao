@@ -1,9 +1,16 @@
 package com.example.binguner.zhijiao.Services;
 
 import com.example.binguner.zhijiao.Bean.AnnouncementBean;
+import com.example.binguner.zhijiao.Bean.GradesBean;
+import com.example.binguner.zhijiao.Bean.LoginBean;
 import com.example.binguner.zhijiao.Bean.WorkBean;
 
+import io.reactivex.internal.operators.observable.ObservableError;
+import okhttp3.ResponseBody;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -29,5 +36,15 @@ public interface TYUTservices {
     * */
     @GET("http://helpstudy.ngrok.cc/help/list{type}/{page}")
     Observable<WorkBean> GetWorkInfo(@Path("type") int type,@Path("page") int page);
+
+
+    //http://grade.ngrok.cc/login
+    @FormUrlEncoded
+    @POST("http://grade.ngrok.cc/login")
+    Observable<LoginBean> FirsrLogin(@Field("username") String username,@Field("password") String password);
+
+    //http://grade.ngrok.cc/grade
+    @GET("http://grade.ngrok.cc/grade/{username}")
+    Observable<ResponseBody> GetGrades(@Path("username") String username);
 
 }

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -22,6 +23,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TableLayout;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout main_activity_drawerlayout;
     private TabLayout main_tab_layout;
     private CoordinatorLayout main_coordinatorlayout;
+    private CollapsingToolbarLayout main_activity_collapsingToolbarLayout;
     private NavigationView main_navigationview;
     private ViewPager main_viewpager;
     private ArrayList<Fragment> fragments = new ArrayList<>();
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView apptitle;
     private static CallBackType callBackType;
     private AppBarLayout main_activity_appbarlayou;
+    private int anim_flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +91,65 @@ public class MainActivity extends AppCompatActivity {
         main_viewpager.setAdapter(myPageAdapter);
         main_tab_layout.setupWithViewPager(main_viewpager);
 
+
+        //main_activity_collapsingToolbarLayout.setTitle("知教");
+
+       // main_activity_collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.START);
+        //main_activity_collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.CENTER_VERTICAL);
+        //main_activity_collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.START);
+        //main_activity_collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.);
+        //main_activity_collapsingToolbarLayout.setCollapsedTitleGravity(Gravity.getAbsoluteGravity(Gravity.START,100));
+     //   main_activity_collapsingToolbarLayout.setCollapsed
+        //main_activity_collapsingToolbarLayout.setExpandedTitleGravity(Gravity.LEFT);
+        //main_activity_collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.colorWhite));
+        //main_activity_collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorTransparent));
     }
 
     private void setListener() {
+        work_type_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(MainActivity.this, view);
+                popupMenu.getMenuInflater().inflate(R.menu.worklist, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.regular_profession:
+                                callBackType.CallBackWorkType(1);
+                                // Snackbar.make(main_coordinatorlayout, "固定岗位", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case R.id.temporary_profession:
+                                callBackType.CallBackWorkType(2);
+                                // Snackbar.make(main_coordinatorlayout, "临时岗位", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case R.id.special_profession:
+                                callBackType.CallBackWorkType(3);
+                                //  Snackbar.make(main_coordinatorlayout, "专业技术岗位", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case R.id.off_campus_profession:
+                                try {
+                                    callBackType.CallBackWorkType(4);
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                //  Snackbar.make(main_coordinatorlayout, "校外岗", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case R.id.interview_notify:
+                                Snackbar.make(main_coordinatorlayout, "面试通知", Snackbar.LENGTH_SHORT).show();
+                                break;
+                            case R.id.admit_notify:
+                                Snackbar.make(main_coordinatorlayout, "录用公告", Snackbar.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+
         work_for_more_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,8 +215,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(intent);
+                        break;
                     case R.id.about:
                         Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(MainActivity.this,AboutActivity.class);
+                        startActivity(intent1);
+                        break;
                 }
                 return true;
             }
@@ -165,14 +230,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, AppBarStateChangeListener.State state) {
                 if (state == State.EXPANDED) {
-                    //展开
-                    apptitle.setVisibility(View.INVISIBLE);
+                     //展开
+                    apptitle.setVisibility(View.VISIBLE);
+                    anim_flag = 0;
                 } else if (state == State.COLLAPSED) {
                     //折叠
                     apptitle.setVisibility(View.VISIBLE);
+                    anim_flag = 1;
                 } else if (state == State.IDLE) {
                     //中间
-                    apptitle.setVisibility(View.INVISIBLE);
+                    //Animation animation = AnimationUtils.loadAnimation(MainActivity.this,R.anim.transparent_show_up);
+                   // Animation animation1 = AnimationUtils.loadAnimation(MainActivity.this,R.anim.transparent_hide_in);
+                    if(anim_flag == 0){
+                       // apptitle.setAnimation(animation);
+                    }else if(anim_flag == 1){
+                       // apptitle.setAnimation(animation1);
+                    }
+                   // apptitle.setAnimation(animation);
+                    apptitle.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -256,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initId() {
+        main_activity_collapsingToolbarLayout = findViewById(R.id.main_activity_collapsingToolbarLayout);
         work_type_name = findViewById(R.id.work_type_name);
         work_for_more_btn = findViewById(R.id.work_for_more_btn);
         main_coordinatorlayout = findViewById(R.id.main_coordinatorlayout);

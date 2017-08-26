@@ -39,24 +39,33 @@
                 <android.support.v7.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="96dp"
+                    android:fitsSystemWindows="false"
                     app:layout_collapseMode="pin"
+                    app:contentInsetStart="0dp"
                     android:gravity="top">
                     <ImageView
+                        android:paddingLeft="15dp"
+                        android:paddingTop="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="15dp"
                         android:id="@+id/main_menu_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/menu_24"/>
-                    <TextView
+                   <TextView
                         android:id="@+id/apptitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
                         android:text="知教"
-                        android:layout_marginStart="30dp"
+                        android:layout_marginStart="0dp"
                         android:textSize="20dp"
                         android:textColor="@color/colorWhite"/>
 
                     <TextView
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="15dp"
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/work_type_name"
                         android:text="固定岗位"
@@ -80,6 +89,7 @@
                     android:id="@+id/main_tab_layout"
                     app:tabTextColor="@color/colorWhite"
                     app:tabIndicatorColor="#90CAF9"
+                    android:fitsSystemWindows="true"
                     app:tabSelectedTextColor="@color/colorGrayLight"
                     android:layout_gravity="bottom"
                     android:layout_width="match_parent"
