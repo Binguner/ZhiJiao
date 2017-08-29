@@ -1,6 +1,12 @@
 package com.example.binguner.zhijiao.UI;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -12,11 +18,14 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.Utils.AppBarStateChangeListener;
+
+import java.net.URI;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +49,7 @@ public class AboutActivity extends AppCompatActivity {
     TextView app_version;
     @BindView(R.id.about_collapsingtoolbarlayout)
     CollapsingToolbarLayout about_collapsingtoolbarlayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +97,35 @@ public class AboutActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
+    @OnClick(R.id.about_checkupdate_btn)
+    void checkUpDate(){
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri uri = Uri.parse("https://fir.im/ZhiJiao");
+        intent.setData(uri);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.about_share)
+    void goToShare(){
+        Intent textIntent = new Intent(Intent.ACTION_SEND);
+        textIntent.setType("text/plain");
+        textIntent.putExtra(Intent.EXTRA_TEXT,"我正在使用「知教」，随时随地访问教务处，获取勤工助学，学校通知等即使信息，完全开源！欢迎使用 \n https://fir.im/ZhiJiao");
+        startActivity(Intent.createChooser(textIntent,"分享"));
+    }
+
+    @OnClick(R.id.about_atar_btn)
+    void goToStar(){
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri uri = Uri.parse("https://github.com/Nenguou/ZhiJiao");
+        intent.setData(uri);
+        startActivity(intent);
+    }
     @OnClick(R.id.about_share)
     void shareApp(View view){
         Snackbar.make(view,"Share",Snackbar.LENGTH_SHORT).show();

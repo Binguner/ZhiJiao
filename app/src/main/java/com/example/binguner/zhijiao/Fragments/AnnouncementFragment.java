@@ -1,7 +1,5 @@
 package com.example.binguner.zhijiao.Fragments;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +15,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Adapter.Work_Announcement_Adapter;
-import com.example.binguner.zhijiao.Bean.AnnouncementBean;
-import com.example.binguner.zhijiao.CallBack.CallBackStatus;
+import com.example.binguner.zhijiao.Entity.AnnouncementBean;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 import com.example.binguner.zhijiao.UI.DetialAty;

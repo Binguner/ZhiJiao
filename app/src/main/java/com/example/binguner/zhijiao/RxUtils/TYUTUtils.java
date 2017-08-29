@@ -1,24 +1,22 @@
 package com.example.binguner.zhijiao.RxUtils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.binguner.zhijiao.Bean.AnnouncementBean;
-import com.example.binguner.zhijiao.Bean.GradesBean;
-import com.example.binguner.zhijiao.Bean.LoginBean;
-import com.example.binguner.zhijiao.Bean.WorkBean;
+import com.example.binguner.zhijiao.Entity.AnnouncementBean;
+import com.example.binguner.zhijiao.Entity.LoginBean;
+import com.example.binguner.zhijiao.Entity.WorkBean;
 import com.example.binguner.zhijiao.BuildConfig;
 import com.example.binguner.zhijiao.CallBack.CallBackStatus;
 import com.example.binguner.zhijiao.Fragments.AnnouncementFragment;
 import com.example.binguner.zhijiao.Fragments.WorkFragment;
 import com.example.binguner.zhijiao.Services.TYUTservices;
-import com.example.binguner.zhijiao.UI.MainActivity;
+import com.example.binguner.zhijiao.Utils.AddCookiesInterceptor;
 import com.example.binguner.zhijiao.Utils.NetworkUtils;
+import com.example.binguner.zhijiao.Utils.ReceivedCookiesInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -41,7 +39,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -57,6 +54,9 @@ public class TYUTUtils {
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<WorkBean.InfoBean> workInfoBeans = null;
     private String path;
+    private String cookleStr;
+
+
     public TYUTUtils(Context context) {
         this.context = context;
     }
@@ -80,7 +80,13 @@ public class TYUTUtils {
             .create();
 
 
-    private OkHttpClient getNewCilent() {
+    private OkHttpClient getNewCilent(Context mContext) {
+
+
+      //  }catch (Exception x){
+        //    x.printStackTrace();
+        //}
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -99,21 +105,51 @@ public class TYUTUtils {
         Interceptor cacheInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
+
                 Request request = chain.request();
                 if (!NetworkUtils.isAvailable(context)) {
-                    Log.d("tetete","dsdsdssd");
+                    Log.d("tetete","unAvailable");
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
                             .build();
                 }
 
                 Response response = chain.proceed(request);
+                /*final List<String> cookies = response.headers("Set-Cookie");
+                cookleStr = "";
+                if(cookies != null && cookies.size()>0){
+                    for(int i = 0; i < cookies.size(); i++){
+                        cookleStr += cookies.get(i);
+                    }
+                    Log.d("cookie",cookleStr+"");
+                }*/
+
+
                 if (NetworkUtils.isAvailable(context)) {
-                    Log.d("tetete","sfsfs");
+                    Log.d("tetete","isAvailable");
                     int maxAge = 0;
                     response.newBuilder()
                             .header("Cache-Control", "public, only-if-cached, max-stale=" + maxAge)
                             .build();
+                    //response.header("Set-Cookie")
+                    //response.header()
+                    /*if(!response.header("Set-Cookie").isEmpty()){
+                        final StringBuffer cookieBuffer = new StringBuffer();
+                        Observable.from(response.headers("set-cookie"))
+                                .map(new Func1<String, String>() {
+                                    @Override
+                                    public String call(String s) {
+                                        String[] cookieArray = s.split(";");
+                                        return cookieArray[0];
+                                    }
+                                })
+                                .subscribe(new Action1<String>() {
+                                    @Override
+                                    public void call(String s) {
+                                        cookieBuffer.append(cookies).append()
+                                    }
+                                });
+                    }*/
 
                 }
                 return response;
@@ -122,28 +158,95 @@ public class TYUTUtils {
 
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+/*
+        builder.interceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Response response= chain.proceed(chain.request());
+                List<String> cookies = response.headers("Set-Cookie");
+                cookleStr = "";
+                if(cookies != null && cookies.size()>0){
+                    for(int i = 0; i < cookies.size(); i++){
+                        cookleStr += cookies.get(i);
+                    }
+                    Log.d("cookie",cookleStr+"");
+                return response;
+            }
+//        });*/
+
+     /*   try {
+            ClearableCookieJar cookieJar =
+                    new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(mContext));
+            Log.d("mContentxxt",mContext.toString());
+            builder.cookieJar(cookieJar);
+        }catch (Exception e){
+            Log.d("mContentxxt",e.toString());
+            e.printStackTrace();
+        }
+*/
+        /*builder.cookieJar(new CookieJar() {
+            final HashMap<HttpUrl,List<Cookie>> cookieStore = new HashMap<HttpUrl,List<Cookie>>();
+            String coocoo;
+            @Override
+            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                cookieStore.put(url,cookies);
+                Log.d("cookieses","putin:"+cookies);
+                Log.d("cookieses1","putin:"+cookies.toString());
+                SharedPreferences sharedPreferences = context.getSharedPreferences("cookie",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("cookie1",cookies.toString());
+                editor.commit();
+                coocoo = cookies.toString();
+            }
+
+            @Override
+            public List<Cookie> loadForRequest(HttpUrl url) {
+                List<Cookie> cookies = cookieStore.get(url);
+                Log.d("cookieses","loadout:"+cookies);
+
+                return cookies!=null? null:new ArrayList<Cookie>();
+                //return coocoo;
+            }
+        });*/
+
+
+
         builder.addInterceptor(loggingInterceptor)
                 .addInterceptor(cacheInterceptor)
+                .addInterceptor(new AddCookiesInterceptor(context))
+                .addInterceptor(new ReceivedCookiesInterceptor(context))
+                /*.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+
+                return chain.proceed(chain.request().newBuilder().header("Cookie",cookleStr).build());
+            }
+        })*/
+               // .cookieJar(cookieJar)
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .cache(cache)
                 .writeTimeout(20, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-        .build();
+                .retryOnConnectionFailure(true);
+        //.build();
 
-        OkHttpClient okHttpClient = builder.build();
+        //OkHttpClient okHttpClient = builder.build();
 
 
-        return okHttpClient;
+        //CookieJar cookieJar = okHttpClient.cookieJar();
+
+
+        return builder.build();
     }
 
     Retrofit retrofit = new Retrofit
             .Builder()
-            .client(getNewCilent())
+            .client(getNewCilent(context))
             .baseUrl("http://tyut.ngrok.cc/notice/list/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .build();
+
 
 
     TYUTservices services = retrofit.create(TYUTservices.class);
@@ -166,10 +269,10 @@ public class TYUTUtils {
                     @Override
                     public void onNext(AnnouncementBean announcementBean) {
                         try {
-                            Log.d("TESTTAG", announcementBean.getStatus());
-                            Log.d("TESTTAG", announcementBean.getInfo().get(0).getTitle());
-                            Log.d("TESTTAG", announcementBean.getInfo().get(0).getUpdate());
-                            Log.d("TESTTAG", announcementBean.getInfo().get(1).getUpdate());
+                            //Log.d("TESTTAG", announcementBean.getStatus());
+                            //Log.d("TESTTAG", announcementBean.getInfo().get(0).getTitle());
+                            //Log.d("TESTTAG", announcementBean.getInfo().get(0).getUpdate());
+                            //Log.d("TESTTAG", announcementBean.getInfo().get(1).getUpdate());
 
                             AnnouncementFragment.AddDatas(announcementBean.getInfo());
                             baseQuickAdapter.notifyItemInserted(AnnouncementFragment.getSize());
@@ -272,8 +375,8 @@ public class TYUTUtils {
                 });
     }
 
-    public void GetGrades(String username){
-        services.GetGrades(username)
+    public void GetGrades(String cookie/*final String username, String password*/){
+        services.GetGrades(cookie)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseBody>() {
@@ -301,5 +404,41 @@ public class TYUTUtils {
 //                        Log.d("LoginTag",gradesBean.getInfo().get(1).getScore()+"");
                     }
                 });
+
+        /*services.FirsrLogin( username, password)
+                .flatMap(new Func1<LoginBean, Observable<ResponseBody>>() {
+                    @Override
+                    public Observable<ResponseBody> call(LoginBean loginBean) {
+                        if(loginBean.getMessage().contains("登陆成功")){
+                            return services.GetGrades(username);
+
+                        }
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+//                        try {
+//                           // Log.d("loginTag",responseBody.string().toString());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+                });*/
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.binguner.zhijiao.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -64,11 +65,13 @@ public class AchieveFragment extends Fragment {
                     e.printStackTrace();
                 }*/
 
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("username",Context.MODE_PRIVATE);
-                String username = sharedPreferences.getString("username",null);
-                Log.d("LoginTag",username+"");
+                //SharedPreferences sharedPreferences = getActivity().getSharedPreferences("username",Context.MODE_PRIVATE);
+                //String username = sharedPreferences.getString("username",null);
+                //Log.d("LoginTag",username+"");
                 try {
-                    tyutUtils.GetGrades(username);
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("cookie",Context.MODE_PRIVATE);
+                    String mCookie = sharedPreferences.getString("cookie1",null);
+                    tyutUtils.GetGrades(mCookie);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -125,7 +128,7 @@ public class AchieveFragment extends Fragment {
         btn_achieve_schedule = getView().findViewById(R.id.btn_achieve_schedule);
         btn_achieve_studentgpa = getView().findViewById(R.id.btn_achieve_studentgpa);
         btn_achieve_searchgrades = getView().findViewById(R.id.btn_achieve_searchgrades);
-        tyutUtils = new TYUTUtils(getContext());
+        tyutUtils = new TYUTUtils(getActivity());
     }
 
     public AchieveFragment() {
@@ -155,16 +158,10 @@ public class AchieveFragment extends Fragment {
         }
     }
 
-    /*@Override
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
+    }
 
     @Override
     public void onDetach() {

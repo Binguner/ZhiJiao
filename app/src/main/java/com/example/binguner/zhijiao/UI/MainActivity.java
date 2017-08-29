@@ -36,6 +36,7 @@ import com.example.binguner.zhijiao.Fragments.AchieveFragment;
 import com.example.binguner.zhijiao.Fragments.AnnouncementFragment;
 import com.example.binguner.zhijiao.Fragments.WorkFragment;
 import com.example.binguner.zhijiao.R;
+import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 import com.example.binguner.zhijiao.Utils.AppBarStateChangeListener;
 
 import java.util.ArrayList;
@@ -343,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
         main_menu_btn = findViewById(R.id.main_menu_btn);
         main_activity_drawerlayout = findViewById(R.id.main_activity_drawerlayout);
         main_navigationview = findViewById(R.id.main_navigationview);
+        //TYUTUtils tyutUtils = new TYUTUtils(this);
     }
 
     public class MyPageAdapter extends FragmentPagerAdapter {

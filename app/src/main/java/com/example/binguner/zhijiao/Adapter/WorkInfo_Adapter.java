@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.binguner.zhijiao.Bean.WorkBean;
+import com.example.binguner.zhijiao.Entity.WorkBean;
 import com.example.binguner.zhijiao.R;
 
 import java.util.List;

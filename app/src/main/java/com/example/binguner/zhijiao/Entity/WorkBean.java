@@ -1,4 +1,4 @@
-package com.example.binguner.zhijiao.Bean;
+package com.example.binguner.zhijiao.Entity;
 
 import java.util.List;
 

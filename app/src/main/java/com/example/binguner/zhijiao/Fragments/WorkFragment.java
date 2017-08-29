@@ -1,6 +1,5 @@
 package com.example.binguner.zhijiao.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Adapter.WorkInfo_Adapter;
-import com.example.binguner.zhijiao.Bean.WorkBean;
+import com.example.binguner.zhijiao.Entity.WorkBean;
 import com.example.binguner.zhijiao.CallBack.CallBackType;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;

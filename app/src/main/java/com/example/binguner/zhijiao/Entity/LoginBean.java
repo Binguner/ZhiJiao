@@ -1,4 +1,4 @@
-package com.example.binguner.zhijiao.Bean;
+package com.example.binguner.zhijiao.Entity;
 
 /**
  * Created by binguner on 2017/8/25.
