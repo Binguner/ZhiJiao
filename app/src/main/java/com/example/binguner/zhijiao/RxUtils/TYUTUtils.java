@@ -3,10 +3,12 @@ package com.example.binguner.zhijiao.RxUtils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Entity.AnnouncementBean;
+import com.example.binguner.zhijiao.Entity.GradesBean;
 import com.example.binguner.zhijiao.Entity.LoginBean;
 import com.example.binguner.zhijiao.Entity.WorkBean;
 import com.example.binguner.zhijiao.BuildConfig;
@@ -14,14 +16,18 @@ import com.example.binguner.zhijiao.CallBack.CallBackStatus;
 import com.example.binguner.zhijiao.Fragments.AnnouncementFragment;
 import com.example.binguner.zhijiao.Fragments.WorkFragment;
 import com.example.binguner.zhijiao.Services.TYUTservices;
+import com.example.binguner.zhijiao.UI.SearchGrades;
 import com.example.binguner.zhijiao.Utils.AddCookiesInterceptor;
 import com.example.binguner.zhijiao.Utils.NetworkUtils;
 import com.example.binguner.zhijiao.Utils.ReceivedCookiesInterceptor;
+
+import com.example.binguner.zhijiao.Utils.UserUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -37,8 +43,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -50,28 +58,33 @@ public class TYUTUtils {
     private Context context;
     private BaseQuickAdapter baseQuickAdapter;
     private BaseQuickAdapter baseQuickAdapter1;
+    private BaseQuickAdapter baseQuickAdapter2;
     private CallBackStatus callBackStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<WorkBean.InfoBean> workInfoBeans = null;
     private String path;
-    private String cookleStr;
-
+    // private String BigcookleStr;
+    private static UserUtil userUtil = new UserUtil();
 
     public TYUTUtils(Context context) {
         this.context = context;
     }
 
-    public TYUTUtils(BaseQuickAdapter baseQuickAdapter,Context context) {
+    public TYUTUtils(BaseQuickAdapter baseQuickAdapter, Context context) {
         this.baseQuickAdapter1 = baseQuickAdapter;
         this.context = context;
     }
 
-    public TYUTUtils(BaseQuickAdapter baseQuickAdapter, SwipeRefreshLayout swipeRefreshLayout,Context context) {
+    public TYUTUtils(BaseQuickAdapter baseQuickAdapter, SwipeRefreshLayout swipeRefreshLayout, Context context) {
         this.baseQuickAdapter = baseQuickAdapter;
         this.swipeRefreshLayout = swipeRefreshLayout;
         this.context = context;
     }
 
+    public TYUTUtils(Context context,BaseQuickAdapter baseQuickAdapter){
+        this.context = context;
+        this.baseQuickAdapter2 = baseQuickAdapter;
+    }
     public void setCallBack(CallBackStatus callBackStatus) {
         this.callBackStatus = callBackStatus;
     }
@@ -83,10 +96,6 @@ public class TYUTUtils {
     private OkHttpClient getNewCilent(Context mContext) {
 
 
-      //  }catch (Exception x){
-        //    x.printStackTrace();
-        //}
-
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -95,7 +104,7 @@ public class TYUTUtils {
         }
         //SharedPreferences sharedPreferences = context.getSharedPreferences("cachePath",Context.MODE_PRIVATE);
         path = "/data/user/0/com.example.binguner.zhijiao/cache";
-        Log.d("tetetetet",path);
+        Log.d("tetetetet", path);
         //设置缓存
         // File cacheFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECT)
         File cacheFile = new File(path, "ZhiJiao");
@@ -108,49 +117,20 @@ public class TYUTUtils {
 
                 Request request = chain.request();
                 if (!NetworkUtils.isAvailable(context)) {
-                    Log.d("tetete","unAvailable");
+                    Log.d("tetete", "unAvailable");
                     request = request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
                             .build();
                 }
 
                 Response response = chain.proceed(request);
-                /*final List<String> cookies = response.headers("Set-Cookie");
-                cookleStr = "";
-                if(cookies != null && cookies.size()>0){
-                    for(int i = 0; i < cookies.size(); i++){
-                        cookleStr += cookies.get(i);
-                    }
-                    Log.d("cookie",cookleStr+"");
-                }*/
-
 
                 if (NetworkUtils.isAvailable(context)) {
-                    Log.d("tetete","isAvailable");
+                    Log.d("tetete", "isAvailable");
                     int maxAge = 0;
                     response.newBuilder()
                             .header("Cache-Control", "public, only-if-cached, max-stale=" + maxAge)
                             .build();
-                    //response.header("Set-Cookie")
-                    //response.header()
-                    /*if(!response.header("Set-Cookie").isEmpty()){
-                        final StringBuffer cookieBuffer = new StringBuffer();
-                        Observable.from(response.headers("set-cookie"))
-                                .map(new Func1<String, String>() {
-                                    @Override
-                                    public String call(String s) {
-                                        String[] cookieArray = s.split(";");
-                                        return cookieArray[0];
-                                    }
-                                })
-                                .subscribe(new Action1<String>() {
-                                    @Override
-                                    public void call(String s) {
-                                        cookieBuffer.append(cookies).append()
-                                    }
-                                });
-                    }*/
-
                 }
                 return response;
             }
@@ -158,84 +138,68 @@ public class TYUTUtils {
 
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-/*
-        builder.interceptors().add(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Response response= chain.proceed(chain.request());
-                List<String> cookies = response.headers("Set-Cookie");
-                cookleStr = "";
-                if(cookies != null && cookies.size()>0){
-                    for(int i = 0; i < cookies.size(); i++){
-                        cookleStr += cookies.get(i);
-                    }
-                    Log.d("cookie",cookleStr+"");
-                return response;
-            }
-//        });*/
-
-     /*   try {
-            ClearableCookieJar cookieJar =
-                    new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(mContext));
-            Log.d("mContentxxt",mContext.toString());
-            builder.cookieJar(cookieJar);
-        }catch (Exception e){
-            Log.d("mContentxxt",e.toString());
-            e.printStackTrace();
-        }
-*/
-        /*builder.cookieJar(new CookieJar() {
-            final HashMap<HttpUrl,List<Cookie>> cookieStore = new HashMap<HttpUrl,List<Cookie>>();
-            String coocoo;
-            @Override
-            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                cookieStore.put(url,cookies);
-                Log.d("cookieses","putin:"+cookies);
-                Log.d("cookieses1","putin:"+cookies.toString());
-                SharedPreferences sharedPreferences = context.getSharedPreferences("cookie",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("cookie1",cookies.toString());
-                editor.commit();
-                coocoo = cookies.toString();
-            }
-
-            @Override
-            public List<Cookie> loadForRequest(HttpUrl url) {
-                List<Cookie> cookies = cookieStore.get(url);
-                Log.d("cookieses","loadout:"+cookies);
-
-                return cookies!=null? null:new ArrayList<Cookie>();
-                //return coocoo;
-            }
-        });*/
-
-
 
         builder.addInterceptor(loggingInterceptor)
                 .addInterceptor(cacheInterceptor)
-                .addInterceptor(new AddCookiesInterceptor(context))
-                .addInterceptor(new ReceivedCookiesInterceptor(context))
-                /*.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-
-                return chain.proceed(chain.request().newBuilder().header("Cookie",cookleStr).build());
-            }
-        })*/
-               // .cookieJar(cookieJar)
+                //.addInterceptor(new AddCookiesInterceptor(context))
+                //.addInterceptor(new ReceivedCookiesInterceptor(context))
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .cache(cache)
                 .writeTimeout(20, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true);
-        //.build();
 
-        //OkHttpClient okHttpClient = builder.build();
+        builder.interceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Response response = chain.proceed(chain.request());
+                List<String> cookies = response.headers("Set-Cookie");
+                String cookieStr = "";
+                if (cookies != null && cookies.size() > 0) {
+                    for (int i = 0; i < cookies.size(); i++) {
+                        cookieStr += cookies.get(i);
+                    }
+                }
+                Log.d("cookieStrString1", cookieStr);
+                //BigcookleStr = cookieStr;
+                //SharedPreferences sharedPreferences = context.getSharedPreferences("cookieStr",Context.MODE_PRIVATE);
+                //SharedPreferences.Editor editor = sharedPreferences.edit();
+                //editor.putString("cookie",null);
+                //editor.commit();
+                userUtil.saveUserCookieId(cookieStr);
+                try {
+                    Log.d("cookieStrString2", userUtil.getCookieId());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return response;
+            }
+        });
 
+        builder.interceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Log.d("cookieStrString", "c");
+                String cookieStr = userUtil.getCookieId();
+                //String cookieStr = BigcookleStr;
+                //Log.d("cookieStrString",cookieStr);
+                // SharedPreferences sharedPreferences = context.getSharedPreferences("cookieStr",Context.MODE_PRIVATE);
 
-        //CookieJar cookieJar = okHttpClient.cookieJar();
-
-
+                //String cookieStr = sharedPreferences.getString("cookie",null);
+                try {
+                    Log.d("cookieStrString", cookieStr + "");
+                   // Log.d("cookieStrString3", userUtil.getCookieId());
+                    Log.d("cookieStrString", "d");
+                } catch (Exception e) {
+                    Log.d("cookieStrString3", e.toString());
+                    e.printStackTrace();
+                }
+                if (!TextUtils.isEmpty(cookieStr)) {
+                    return chain.proceed(chain.request().newBuilder().header("Cookie", cookieStr).build());
+                }
+                return chain.proceed(chain.request());
+            }
+        });
         return builder.build();
     }
 
@@ -246,7 +210,6 @@ public class TYUTUtils {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .build();
-
 
 
     TYUTservices services = retrofit.create(TYUTservices.class);
@@ -348,35 +311,35 @@ public class TYUTUtils {
                 });
     }
 
-    public void firstLogin(String username,String password){
-        services.FirsrLogin(username,password)
+    public void firstLogin(String username, String password) {
+        services.FirsrLogin(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<LoginBean>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("LoginTag","Compleded");
+                        Log.d("LoginTag", "Compleded");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("LoginTag","onError: "+e.toString());
+                        Log.d("LoginTag", "onError: " + e.toString());
                     }
 
                     @Override
                     public void onNext(LoginBean loginBean) {
-                        Log.d("LoginTag",loginBean.getUsername());
-                        Log.d("LoginTag",loginBean.getMessage());
-                        SharedPreferences sharedPreferences = context.getSharedPreferences("username",Context.MODE_PRIVATE);
+                        Log.d("LoginTag", loginBean.getUsername());
+                        Log.d("LoginTag", loginBean.getMessage());
+                        SharedPreferences sharedPreferences = context.getSharedPreferences("username", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("username",loginBean.getUsername());
+                        editor.putString("username", loginBean.getUsername());
                         editor.commit();
                     }
                 });
     }
 
-    public void GetGrades(String cookie/*final String username, String password*/){
-        services.GetGrades(cookie)
+    public void GetGrades(String username, String password/*final String username, String password*/) {
+       /* services.GetGrades()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseBody>() {
@@ -403,14 +366,14 @@ public class TYUTUtils {
 //                        Log.d("LoginTag",gradesBean.getInfo().get(1).getName()+"");
 //                        Log.d("LoginTag",gradesBean.getInfo().get(1).getScore()+"");
                     }
-                });
+                });*/
 
-        /*services.FirsrLogin( username, password)
-                .flatMap(new Func1<LoginBean, Observable<ResponseBody>>() {
+        services.FirsrLogin(username, password)
+                .flatMap(new Func1<LoginBean, Observable<GradesBean>>() {
                     @Override
-                    public Observable<ResponseBody> call(LoginBean loginBean) {
-                        if(loginBean.getMessage().contains("登陆成功")){
-                            return services.GetGrades(username);
+                    public Observable<GradesBean> call(LoginBean loginBean) {
+                        if (loginBean.getMessage().contains("登陆成功")) {
+                            return services.GetGrades();
 
                         }
                         return null;
@@ -418,26 +381,32 @@ public class TYUTUtils {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribe(new Subscriber<GradesBean>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.d("finallytest", "Completed");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.d("finallytest", "onError:" + e.toString());
                     }
 
                     @Override
-                    public void onNext(ResponseBody responseBody) {
-//                        try {
-//                           // Log.d("loginTag",responseBody.string().toString());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
+                    public void onNext(GradesBean gradesBean) {
+                        Log.d("finallytest", gradesBean.getMessage());
+                        Log.d("finallytest", gradesBean.getInfo().get(0).getCredit());
+                        Log.d("finallytest", gradesBean.getInfo().get(0).getName());
+                        Log.d("finallytest", gradesBean.getInfo().get(0).getProperty());
+                        Log.d("finallytest", gradesBean.getInfo().get(0).getScore());
+                        Log.d("finallytest", gradesBean.getInfo().get(1).getCredit());
+                        Log.d("finallytest", gradesBean.getInfo().get(1).getName());
+                        Log.d("finallytest", gradesBean.getInfo().get(1).getProperty());
+                        Log.d("finallytest", gradesBean.getInfo().get(1).getScore());
+                        SearchGrades.addGradeDatas(gradesBean.getInfo());
+                        baseQuickAdapter2.notifyItemInserted(SearchGrades.getSize());
                     }
-                });*/
+                });
     }
 
 

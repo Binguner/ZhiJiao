@@ -1,6 +1,7 @@
 package com.example.binguner.zhijiao.Services;
 
 import com.example.binguner.zhijiao.Entity.AnnouncementBean;
+import com.example.binguner.zhijiao.Entity.GradesBean;
 import com.example.binguner.zhijiao.Entity.LoginBean;
 import com.example.binguner.zhijiao.Entity.WorkBean;
 
@@ -44,6 +45,6 @@ public interface TYUTservices {
 
     //http://grade.ngrok.cc/grade
     @GET("http://grade.ngrok.cc/grade")
-    Observable<ResponseBody> GetGrades(@Header("Set-Cookie") String cookie/*@Path("username"*/);/* String username*/
+    Observable<GradesBean> GetGrades(/*@Header("Set-Cookie") String cookie */   /*@Path("username"*/);/* String username*/
 
 }

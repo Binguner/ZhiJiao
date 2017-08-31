@@ -19,9 +19,12 @@ import android.widget.Toolbar;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 import com.example.binguner.zhijiao.UI.FooterView;
+import com.example.binguner.zhijiao.UI.SearchGrades;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.Interceptor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,13 +71,15 @@ public class AchieveFragment extends Fragment {
                 //SharedPreferences sharedPreferences = getActivity().getSharedPreferences("username",Context.MODE_PRIVATE);
                 //String username = sharedPreferences.getString("username",null);
                 //Log.d("LoginTag",username+"");
-                try {
+                Intent intent = new Intent(getContext(), SearchGrades.class);
+                startActivity(intent);
+                /*try {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("cookie",Context.MODE_PRIVATE);
                     String mCookie = sharedPreferences.getString("cookie1",null);
-                    tyutUtils.GetGrades(mCookie);
+                    tyutUtils.GetGrades("2016006593","144517");
                 }catch (Exception e){
                     e.printStackTrace();
-                }
+                }*/
 
 
 

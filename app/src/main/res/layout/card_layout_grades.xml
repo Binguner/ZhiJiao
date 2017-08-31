@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_layout_grade_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/card_layout_grade_name"
+        app:layout_constraintStart_toEndOf="@+id/card_layout_grade_parent"
+
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_grade_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        android:text="大学物理"/>
+    <TextView
+        android:id="@+id/card_layout_grade_score"
+
+        app:layout_constraintStart_toEndOf="@+id/card_layout_grade_name"
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_grade_credit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        android:text="100.0"/>
+    <TextView
+        android:id="@+id/card_layout_grade_credit"
+
+        app:layout_constraintStart_toEndOf="@+id/card_layout_grade_score"
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_grade_property"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        android:text="2.5"/>
+    <TextView
+        android:id="@+id/card_layout_grade_property"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/card_layout_grade_credit"
+        app:layout_constraintEnd_toEndOf="@+id/card_layout_grade_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="通识必修"/>
+
+</android.support.constraint.ConstraintLayout>

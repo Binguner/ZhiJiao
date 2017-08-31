@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/grade_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackGround"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.binguner.zhijiao.UI.SearchGrades">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/grades_toolbar"
+        android:background="@color/colorBlue"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetStart="0dp"
+        android:fitsSystemWindows="true">
+        <ImageView
+            android:id="@+id/grades_back"
+            android:padding="10dp"
+            android:layout_width="40dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/back_white_48"/>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <TextView
+        app:layout_constraintStart_toEndOf="@+id/grade_parent"
+        android:id="@+id/grade_sub"
+        app:layout_constraintEnd_toStartOf="@+id/grade_score"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@+id/grades_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="科目"/>
+    <TextView
+        app:layout_constraintEnd_toStartOf="@+id/grade_credit"
+        app:layout_constraintStart_toEndOf="@+id/grade_sub"
+        android:id="@+id/grade_score"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@+id/grades_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="成绩"/>
+    <TextView
+        app:layout_constraintEnd_toStartOf="@+id/grade_type"
+        app:layout_constraintStart_toEndOf="@+id/grade_score"
+        android:id="@+id/grade_credit"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@+id/grades_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="学分"
+        />
+    <TextView
+        app:layout_constraintEnd_toEndOf="@+id/grade_parent"
+        app:layout_constraintStart_toEndOf="@+id/grade_credit"
+        android:id="@+id/grade_type"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintTop_toBottomOf="@+id/grades_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="类型"
+        />
+    <ImageView
+        android:id="@+id/grade_line"
+        app:layout_constraintTop_toBottomOf="@+id/grade_credit"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGray"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:background="@color/colorYellow"
+        android:id="@+id/grade_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="76dp"
+        app:layout_constraintTop_toBottomOf="@+id/grade_line"/>
+
+</android.support.constraint.ConstraintLayout>
