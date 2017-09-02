@@ -39,7 +39,7 @@ public class FooterView extends AppCompatActivity {
     }
 
     private void initId() {
-        waveView = findViewById(R.id.myWaveView);
+        waveView = findViewById(R.id.myWaveView1);
     }
 /*
     private void initAnimation() {

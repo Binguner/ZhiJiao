@@ -1,6 +1,7 @@
 package com.example.binguner.zhijiao.Services;
 
 import com.example.binguner.zhijiao.Entity.AnnouncementBean;
+import com.example.binguner.zhijiao.Entity.ClassBean;
 import com.example.binguner.zhijiao.Entity.GradesBean;
 import com.example.binguner.zhijiao.Entity.LoginBean;
 import com.example.binguner.zhijiao.Entity.WorkBean;
@@ -44,7 +45,13 @@ public interface TYUTservices {
     Observable<LoginBean> FirsrLogin(@Field("username") String username,@Field("password") String password);
 
     //http://grade.ngrok.cc/grade
-    @GET("http://grade.ngrok.cc/grade")
-    Observable<GradesBean> GetGrades(/*@Header("Set-Cookie") String cookie */   /*@Path("username"*/);/* String username*/
+    @FormUrlEncoded
+    @POST("http://grade.ngrok.cc/grade")
+    Observable<GradesBean> GetGrades(@Field("username") String username,@Field("password") String password/*@Header("Set-Cookie") String cookie */   /*@Path("username"*/);/* String username*/
 
+    //获取课表
+    //http://grade.ngrok.cc/class
+    @FormUrlEncoded
+    @POST("http://grade.ngrok.cc/class")
+    Observable<ClassBean> GetClass(@Field("username") String username,@Field("password") String password);
 }

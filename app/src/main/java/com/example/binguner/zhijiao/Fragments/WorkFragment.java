@@ -26,9 +26,13 @@ import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 import com.example.binguner.zhijiao.UI.DetialAty;
 import com.example.binguner.zhijiao.UI.MainActivity;
 import com.example.binguner.zhijiao.Utils.CircularAnim;
+import com.example.binguner.zhijiao.View.WaveView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,11 +55,13 @@ public class WorkFragment extends Fragment {
     private int lastItemPosition;
     private int page = 1;
     private int type = 1;
+
     //private MainActivity mainActivity = new MainActivity();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         initId();
         initViews();
         setListener();
@@ -233,12 +239,13 @@ public class WorkFragment extends Fragment {
     }
 
     private void initViews() {
+
         linearLayoutManager = new LinearLayoutManager(getContext());
         work_recyclerview.setLayoutManager(linearLayoutManager);
         work_recyclerview.setHasFixedSize(true);
         work_recyclerview.setAdapter(workInfo_adapter);
         work_swiperefreshlayout.setColorSchemeColors(getResources().getColor(R.color.colorRed), getResources().getColor(R.color.colorYellow), getResources().getColor(R.color.colorBlue), getResources().getColor(R.color.colorGreen));
-        View view = getLayoutInflater().inflate(R.layout.activity_footer_view, null);
+        View view = getLayoutInflater().inflate(R.layout.activity_footer_view,null);
         workInfo_adapter.addFooterView(view);
         workInfo_adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         workInfo_adapter.isFirstOnly(true);
@@ -304,7 +311,6 @@ public class WorkFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_work, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -331,5 +337,21 @@ public class WorkFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
 }

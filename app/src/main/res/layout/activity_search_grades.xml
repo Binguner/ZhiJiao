@@ -20,7 +20,13 @@
             android:layout_width="40dp"
             android:layout_height="48dp"
             android:src="@mipmap/back_white_48"/>
-
+        <ImageView
+            android:id="@+id/grade_refresh"
+            android:src="@mipmap/refresh_48_white"
+            android:layout_gravity="right"
+            android:padding="10dp"
+            android:layout_width="40dp"
+            android:layout_height="48dp" />
     </android.support.v7.widget.Toolbar>
 
 
@@ -70,7 +76,7 @@
         android:background="@color/colorGray"/>
 
     <android.support.v7.widget.RecyclerView
-        android:background="@color/colorYellow"
+        android:background="@color/colorBackGround"
         android:id="@+id/grade_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

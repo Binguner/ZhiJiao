@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/class_table_parent"
+    android:background="@color/colorBackGround"
+    tools:context="com.example.binguner.zhijiao.UI.ClassTable">
+
+    <android.support.v7.widget.Toolbar
+        app:layout_constraintTop_toBottomOf="@+id/class_table_parent"
+        android:id="@+id/class_table_toolbar"
+        android:layout_width="match_parent"
+        app:contentInsetStart="0dp"
+        android:background="@color/colorBlue"
+        android:layout_height="?attr/actionBarSize">
+        <ImageView
+            android:id="@+id/class_table_back"
+            android:padding="10dp"
+            android:src="@mipmap/back_white_48"
+            android:layout_width="40dp"
+            android:layout_height="48dp" />
+        <ImageView
+            android:id="@+id/class_table_refresh"
+            android:src="@mipmap/refresh_48_white"
+            android:padding="10dp"
+            android:layout_gravity="right"
+            android:layout_width="40dp"
+            android:layout_height="48dp" />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/class_table_guideline1"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/class_table_mon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="周一"
+        app:layout_constraintStart_toEndOf="@+id/class_table_guideline1"
+        app:layout_constraintEnd_toStartOf="@+id/class_table_Tues"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_toolbar"/>
+    <TextView
+        android:id="@+id/class_table_Tues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="周二"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_toolbar"
+        app:layout_constraintStart_toEndOf="@+id/class_table_mon"
+        app:layout_constraintEnd_toStartOf="@+id/class_table_wen"/>
+    <TextView
+        android:id="@+id/class_table_wen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_toolbar"
+        android:text="周三"
+        app:layout_constraintEnd_toStartOf="@+id/class_table_Thur"
+        app:layout_constraintStart_toEndOf="@+id/class_table_Tues"/>
+    <TextView
+        android:id="@+id/class_table_Thur"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_toolbar"
+        android:layout_height="wrap_content"
+        android:text="周四"
+        app:layout_constraintEnd_toStartOf="@+id/class_table_Fri"
+        app:layout_constraintStart_toEndOf="@+id/class_table_wen" />
+    <TextView
+        android:id="@+id/class_table_Fri"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_toolbar"
+        android:layout_height="wrap_content"
+        android:text="周五"
+        app:layout_constraintEnd_toStartOf="@+id/class_table_Sat"
+        app:layout_constraintStart_toEndOf="@+id/class_table_Thur"/>
+    <TextView
+        android:id="@+id/class_table_Sat"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="周六"
+        app:layout_constraintEnd_toStartOf="@+id/class_table_Sun"
+        app:layout_constraintStart_toEndOf="@+id/class_table_Fri"/>
+    <TextView
+        android:id="@+id/class_table_Sun"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_toolbar"
+        android:layout_height="wrap_content"
+        android:text="周日"
+        app:layout_constraintStart_toEndOf="@+id/class_table_Sat"
+        app:layout_constraintEnd_toEndOf="@+id/class_table_parent"/>
+    <ImageView
+        app:layout_constraintTop_toBottomOf="@+id/class_table_Tues"
+        android:id="@+id/class_table_shadow_under_day"
+        android:background="@color/colorGrayAlittle"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="77dp"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_shadow_under_day"
+        android:background="@color/colorBackGround"
+        android:id="@+id/class_table_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</android.support.constraint.ConstraintLayout>

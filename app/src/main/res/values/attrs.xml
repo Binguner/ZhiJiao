@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WaveView">
+        <attr name="waveView_color" format="color"/>
+        <attr name="waveView_zhengFu" format="integer"/>
+        <attr name="waveView_jiaoSuDu" format="integer"/>
+        <attr name="waveView_pianJu" format="integer"/>
+        <attr name="waveView_chuXiang" format="float"/>
+    </declare-styleable>
+</resources>

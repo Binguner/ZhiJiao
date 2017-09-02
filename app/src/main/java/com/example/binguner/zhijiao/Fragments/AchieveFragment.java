@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.Toolbar;
 
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
+import com.example.binguner.zhijiao.UI.ClassTable;
 import com.example.binguner.zhijiao.UI.FooterView;
 import com.example.binguner.zhijiao.UI.SearchGrades;
 
@@ -58,7 +60,7 @@ public class AchieveFragment extends Fragment {
         btn_achieve_searchgrades.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"成绩查询",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),"成绩查询",Toast.LENGTH_SHORT).show();
                 //TYUTUtils tyutUtils = new TYUTUtils();
                 //tyutUtils.getAnnouncements();
                 /*try {
@@ -110,6 +112,10 @@ public class AchieveFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(),"学期课表",Toast.LENGTH_SHORT).show();
+                TYUTUtils tyutUtils = new TYUTUtils(getContext());
+                tyutUtils.getClass("2016006593","144517");
+                Intent intent = new Intent(getContext(), ClassTable.class);
+                startActivity(intent);
             }
         });
         btn_achieve_easyjudge.setOnClickListener(new View.OnClickListener() {

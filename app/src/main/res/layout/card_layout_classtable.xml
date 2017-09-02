@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_layout_class_table_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/card_layout_time"
+        android:layout_width="50dp"
+        android:background="@drawable/classtable_bg0"
+        android:layout_height="match_parent"
+        android:text="第一小节(08:00-08:50)"/>
+    <android.support.constraint.Guideline
+        android:id="@+id/card_layout_class_table_guideline_mon"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.13"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/card_layout_class_table_mon"
+        app:layout_constraintStart_toEndOf="@+id/card_layout_class_table_guideline_mon"
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_class_table_tues"
+        android:layout_width="0dp"
+        android:background="@drawable/classtable_bg1"
+        android:layout_height="wrap_content"
+        android:text="大学英语(三)_15(明向校区行远楼B122)"/>
+    <android.support.constraint.Guideline
+        android:id="@+id/card_layout_class_table_guideline_Tues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.27"/>
+    <Button
+        android:id="@+id/card_layout_class_table_tues"
+        app:layout_constraintStart_toEndOf="@id/card_layout_class_table_mon"
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_class_table_wen"
+        android:background="@drawable/classtable_bg2"
+        android:layout_width="0dp"
+        android:text="Java语言程序设计R_08(明向校区行远楼B121)"
+        android:layout_height="wrap_content" />
+    <android.support.constraint.Guideline
+        android:id="@+id/card_layout_class_table_guideline_wen"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.41"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/card_layout_class_table_wen"
+        app:layout_constraintStart_toEndOf="@+id/card_layout_class_table_tues"
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_class_table_thur"
+        android:background="@drawable/classtable_bg3"
+        android:text="电路与电子技术R_08(明向校区行知楼B117)"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <android.support.constraint.Guideline
+        android:id="@+id/card_layout_class_table_guideline_thur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55"/>
+    <Button
+        android:id="@+id/card_layout_class_table_thur"
+        android:background="@drawable/classtable_bg4"
+        app:layout_constraintStart_toEndOf="@+id/card_layout_class_table_wen"
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_class_table_fri"
+        android:text="马克思主义基本原理_12(明向校区行知楼B117)"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <android.support.constraint.Guideline
+        android:id="@+id/card_layout_class_table_guideline_fir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.68"/>
+    <Button
+        android:id="@+id/card_layout_class_table_fri"
+        app:layout_constraintStart_toEndOf="@+id/card_layout_class_table_thur"
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_class_table_sat"
+        android:text="数据结构R_08(明向校区行知楼B115)"
+        android:background="@drawable/classtable_bg5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <android.support.constraint.Guideline
+        android:id="@+id/card_layout_class_table_guideline_sat"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.78"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/card_layout_class_table_sat"
+        android:background="@drawable/classtable_bg6"
+        android:text="形势与政策(三)_11(明向校区行远楼A107)"
+        app:layout_constraintEnd_toStartOf="@+id/card_layout_class_table_sun"
+        app:layout_constraintStart_toEndOf="@+id/card_layout_class_table_fri"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <android.support.constraint.Guideline
+        android:id="@+id/card_layout_class_table_guideline_sun"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.88"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/card_layout_class_table_sun"
+        android:background="@drawable/classtable_bg7"
+        android:text="概率论与数理统计E_06(明向校区行知楼C226)"
+        app:layout_constraintStart_toEndOf="@+id/card_layout_class_table_sat"
+        app:layout_constraintEnd_toEndOf="@+id/card_layout_class_table_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        />
+</android.support.constraint.ConstraintLayout>

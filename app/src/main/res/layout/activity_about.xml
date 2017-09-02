@@ -185,7 +185,7 @@
                         android:textColor="@color/colorGray"
                         android:text="这个人开发了app"/>
 
-                    <TextView
+                    <!--<TextView
                         android:paddingTop="16dp"
                         app:layout_constraintRight_toLeftOf="@+id/about_send_message1"
                         android:text="反馈"
@@ -199,7 +199,7 @@
                         android:src="@mipmap/message_white_48"
                         android:layout_marginEnd="10dp"
                         android:padding="10dp"
-                        app:layout_constraintEnd_toEndOf="@+id/about_card_constraintlayout"/>
+                        app:layout_constraintEnd_toEndOf="@+id/about_card_constraintlayout"/>-->
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_marginTop="4dp"

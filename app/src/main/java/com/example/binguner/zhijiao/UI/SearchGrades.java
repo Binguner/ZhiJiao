@@ -1,13 +1,16 @@
 package com.example.binguner.zhijiao.UI;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Adapter.Grade_Adapter;
+import com.example.binguner.zhijiao.CallBack.CallBackGrades;
 import com.example.binguner.zhijiao.Entity.GradesBean;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
@@ -23,6 +26,9 @@ public class SearchGrades extends AppCompatActivity {
 
     @BindView(R.id.grade_recyclerview)
     RecyclerView grade_recyclerview;
+    //private int flag = 0;
+    @BindView(R.id.grade_refresh)
+    ImageView grade_refresh;
 
     private LinearLayoutManager linearLayoutManager;
     private Grade_Adapter grade_adapter;
@@ -37,8 +43,18 @@ public class SearchGrades extends AppCompatActivity {
         ButterKnife.bind(this);
         initId();
         firstLoad();
-
+        SaySth();
         initView();
+    }
+
+    private void SaySth() {
+        final Snackbar snackbar = Snackbar.make(getWindow().getDecorView(),"如果数据加载失败，请点击刷新按钮 :)",Snackbar.LENGTH_SHORT);
+                snackbar.setAction("Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        snackbar.dismiss();
+                    }
+                }).show();
     }
 
     private void initView() {
@@ -49,7 +65,50 @@ public class SearchGrades extends AppCompatActivity {
         grade_adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        try{
+            int size = infoBeans.size();
+            for(int i = 0;i < size; i++){
+                grade_adapter.remove(0);
+            }
+            infoBeans.clear();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void firstLoad() {
+
+
+        /*tyutUtils.setCallBack(null, new CallBackGrades() {
+            @Override
+            public void callBackGrades(int status) {
+                if(status == 1){
+
+                }
+            }
+        });
+        if(flag == 0){*/
+            tyutUtils.GetGrades("2016006593","144517");
+            /*flag = 1;
+        }else if (flag == 1){
+            // Do noting;
+        }*/
+    }
+
+    @OnClick(R.id.grade_refresh)
+    void refresh(){
+        try{
+            int size = infoBeans.size();
+            for(int i = 0;i < size; i++){
+                grade_adapter.remove(0);
+            }
+            infoBeans.clear();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         tyutUtils.GetGrades("2016006593","144517");
     }
 

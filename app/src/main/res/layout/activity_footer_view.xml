@@ -3,12 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/waveView_parent"
     android:layout_height="wrap_content"
     tools:context="com.example.binguner.zhijiao.UI.FooterView">
     
     <com.example.binguner.zhijiao.View.WaveView
-        android:id="@+id/myWaveView"
+        android:id="@+id/myWaveView1"
         android:layout_width="match_parent"
+        app:waveView_jiaoSuDu="2"
+        app:waveView_pianJu="0"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_zhengFu="30"
         android:layout_height="120dp" />
+    <com.example.binguner.zhijiao.View.WaveView
+        android:id="@+id/myWaveView1"
+        android:layout_width="match_parent"
+        app:waveView_jiaoSuDu="1"
+        app:waveView_pianJu="0"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_chuXiang="3"
+        app:waveView_zhengFu="30"
+        android:layout_height="120dp" />
+
 
 </android.support.constraint.ConstraintLayout>

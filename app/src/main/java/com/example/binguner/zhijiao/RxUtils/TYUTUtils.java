@@ -2,12 +2,15 @@ package com.example.binguner.zhijiao.RxUtils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.binguner.zhijiao.CallBack.CallBackGrades;
 import com.example.binguner.zhijiao.Entity.AnnouncementBean;
+import com.example.binguner.zhijiao.Entity.ClassBean;
 import com.example.binguner.zhijiao.Entity.GradesBean;
 import com.example.binguner.zhijiao.Entity.LoginBean;
 import com.example.binguner.zhijiao.Entity.WorkBean;
@@ -16,6 +19,7 @@ import com.example.binguner.zhijiao.CallBack.CallBackStatus;
 import com.example.binguner.zhijiao.Fragments.AnnouncementFragment;
 import com.example.binguner.zhijiao.Fragments.WorkFragment;
 import com.example.binguner.zhijiao.Services.TYUTservices;
+import com.example.binguner.zhijiao.UI.ClassTable;
 import com.example.binguner.zhijiao.UI.SearchGrades;
 import com.example.binguner.zhijiao.Utils.AddCookiesInterceptor;
 import com.example.binguner.zhijiao.Utils.NetworkUtils;
@@ -59,12 +63,15 @@ public class TYUTUtils {
     private BaseQuickAdapter baseQuickAdapter;
     private BaseQuickAdapter baseQuickAdapter1;
     private BaseQuickAdapter baseQuickAdapter2;
+    private BaseQuickAdapter baseQuickAdapter3;
     private CallBackStatus callBackStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<WorkBean.InfoBean> workInfoBeans = null;
     private String path;
+    private CallBackGrades callBackGrades;
     // private String BigcookleStr;
     private static UserUtil userUtil = new UserUtil();
+
 
     public TYUTUtils(Context context) {
         this.context = context;
@@ -80,13 +87,17 @@ public class TYUTUtils {
         this.swipeRefreshLayout = swipeRefreshLayout;
         this.context = context;
     }
-
+    /*public TYUTUtils(BaseQuickAdapter baseQuickAdapter,Context context){
+        this.baseQuickAdapter3 = baseQuickAdapter;
+        this.context = context;
+    }*/
     public TYUTUtils(Context context,BaseQuickAdapter baseQuickAdapter){
         this.context = context;
         this.baseQuickAdapter2 = baseQuickAdapter;
     }
-    public void setCallBack(CallBackStatus callBackStatus) {
+    public void setCallBack(@Nullable CallBackStatus callBackStatus,@Nullable CallBackGrades callBackGrades) {
         this.callBackStatus = callBackStatus;
+        this.callBackGrades = callBackGrades;
     }
 
     Gson gson = new GsonBuilder()
@@ -149,7 +160,7 @@ public class TYUTUtils {
                 .writeTimeout(20, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true);
 
-        builder.interceptors().add(new Interceptor() {
+       /* builder.interceptors().add(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Response response = chain.proceed(chain.request());
@@ -199,7 +210,7 @@ public class TYUTUtils {
                 }
                 return chain.proceed(chain.request());
             }
-        });
+        });*/
         return builder.build();
     }
 
@@ -338,42 +349,46 @@ public class TYUTUtils {
                 });
     }
 
-    public void GetGrades(String username, String password/*final String username, String password*/) {
-       /* services.GetGrades()
+    public void GetGrades(final String username, final String password/*final String username, String password*/) {
+        services.GetGrades(username,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribe(new Subscriber<GradesBean>() {
                     @Override
                     public void onCompleted() {
                         Log.d("LoginTag","Completed");
+                        //callBackGrades.callBackGrades(1);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.d("LoginTag",e.toString());
+                       // callBackGrades.callBackGrades(0);
                     }
 
                     @Override
-                    public void onNext(ResponseBody gradesBean) {
-                        //Log.d("LoginTag",gradesBean.getMessage()+"");
-                        //Log.d("LoginTag",gradesBean.getInfo().size()+"");
-                        try {
-                            Log.d("LoginTag",gradesBean.string().toString()+"");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-//                        Log.d("LoginTag",gradesBean.getInfo().get(2).getName()+"");
-//                        Log.d("LoginTag",gradesBean.getInfo().get(1).getName()+"");
-//                        Log.d("LoginTag",gradesBean.getInfo().get(1).getScore()+"");
-                    }
-                });*/
+                    public void onNext(GradesBean gradesBean) {
+                        Log.d("finallytest", gradesBean.getMessage());
+                        Log.d("finallytest", gradesBean.getInfo().get(0).getCredit());
+                        Log.d("finallytest", gradesBean.getInfo().get(0).getName());
+                        Log.d("finallytest", gradesBean.getInfo().get(0).getProperty());
+                        Log.d("finallytest", gradesBean.getInfo().get(0).getScore());
+                        Log.d("finallytest", gradesBean.getInfo().get(1).getCredit());
+                        Log.d("finallytest", gradesBean.getInfo().get(1).getName());
+                        Log.d("finallytest", gradesBean.getInfo().get(1).getProperty());
+                        Log.d("finallytest", gradesBean.getInfo().get(1).getScore());
+                        SearchGrades.addGradeDatas(gradesBean.getInfo());
+                        baseQuickAdapter2.notifyItemInserted(SearchGrades.getSize());
 
-        services.FirsrLogin(username, password)
+                    }
+                });
+
+        /*services.FirsrLogin(username, password)
                 .flatMap(new Func1<LoginBean, Observable<GradesBean>>() {
                     @Override
                     public Observable<GradesBean> call(LoginBean loginBean) {
                         if (loginBean.getMessage().contains("登陆成功")) {
-                            return services.GetGrades();
+                            return services.GetGrades(username,password);
 
                         }
                         return null;
@@ -405,6 +420,31 @@ public class TYUTUtils {
                         Log.d("finallytest", gradesBean.getInfo().get(1).getScore());
                         SearchGrades.addGradeDatas(gradesBean.getInfo());
                         baseQuickAdapter2.notifyItemInserted(SearchGrades.getSize());
+                    }
+                });*/
+    }
+
+    public void getClass(String username,String password){
+        services.GetClass(username,password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ClassBean>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("getClassTag","onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("getClassTag","onError: "+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ClassBean classBean) {
+                        Log.d("getClassTag",classBean.getTable().get(0).getMonday());
+                        Log.d("getClassTag",classBean.getTable().get(1).getMonday());
+                        ClassTable.addClassTableDatas(classBean.getTable());
+                        baseQuickAdapter1.notifyItemInserted(ClassTable.getSize());
                     }
                 });
     }
