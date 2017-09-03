@@ -31,7 +31,9 @@
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".UI.SearchGrades" />
-        <activity android:name=".UI.ClassTable"></activity>
+        <activity android:name=".UI.ClassTable" />
+        <activity android:name=".UI.ClassTableDetial" />
+        <activity android:name=".UI.ClassArray"></activity>
     </application>
 
 </manifest>

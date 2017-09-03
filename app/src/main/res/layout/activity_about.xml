@@ -62,9 +62,10 @@
 
                 <ImageView
                     android:id="@+id/about_back_btn"
-                    android:padding="10dp"
-                    android:layout_width="40dp"
-                    android:layout_height="48dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
                     android:src="@mipmap/back_white_48"/>
 
                 <ImageView
@@ -75,9 +76,10 @@
                     android:id="@+id/about_share"
                     android:layout_gravity="right"
                     android:padding="10dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="20dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
                     android:src="@mipmap/share_white_48"/>
 
             </android.support.v7.widget.Toolbar>

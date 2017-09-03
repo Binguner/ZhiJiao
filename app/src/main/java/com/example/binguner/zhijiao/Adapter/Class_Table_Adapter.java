@@ -35,6 +35,14 @@ public class Class_Table_Adapter extends BaseQuickAdapter<ClassBean.TableBean,Cl
                 .setText(R.id.card_layout_class_table_fri,item.getFriday())
                 .setText(R.id.card_layout_class_table_sat,item.getSaturday())
                 .setText(R.id.card_layout_class_table_sun,item.getSunday());
+        helper.addOnClickListener(R.id.card_layout_time);
+        helper.addOnClickListener(R.id.card_layout_class_table_mon);
+        helper.addOnClickListener(R.id.card_layout_class_table_tues);
+        helper.addOnClickListener(R.id.card_layout_class_table_wen);
+        helper.addOnClickListener(R.id.card_layout_class_table_thur);
+        helper.addOnClickListener(R.id.card_layout_class_table_fri);
+        helper.addOnClickListener(R.id.card_layout_class_table_sat);
+        helper.addOnClickListener(R.id.card_layout_class_table_sun);
     }
 
     public class MyViewHolder extends BaseViewHolder{

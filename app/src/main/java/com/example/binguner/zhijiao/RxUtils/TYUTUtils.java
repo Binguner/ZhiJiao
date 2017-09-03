@@ -10,6 +10,7 @@ import android.util.Log;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.CallBack.CallBackGrades;
 import com.example.binguner.zhijiao.Entity.AnnouncementBean;
+import com.example.binguner.zhijiao.Entity.ClassArrangeBean;
 import com.example.binguner.zhijiao.Entity.ClassBean;
 import com.example.binguner.zhijiao.Entity.GradesBean;
 import com.example.binguner.zhijiao.Entity.LoginBean;
@@ -19,6 +20,7 @@ import com.example.binguner.zhijiao.CallBack.CallBackStatus;
 import com.example.binguner.zhijiao.Fragments.AnnouncementFragment;
 import com.example.binguner.zhijiao.Fragments.WorkFragment;
 import com.example.binguner.zhijiao.Services.TYUTservices;
+import com.example.binguner.zhijiao.UI.ClassArray;
 import com.example.binguner.zhijiao.UI.ClassTable;
 import com.example.binguner.zhijiao.UI.SearchGrades;
 import com.example.binguner.zhijiao.Utils.AddCookiesInterceptor;
@@ -87,7 +89,7 @@ public class TYUTUtils {
         this.swipeRefreshLayout = swipeRefreshLayout;
         this.context = context;
     }
-    /*public TYUTUtils(BaseQuickAdapter baseQuickAdapter,Context context){
+    /*public TYUTUtils(BaseQuickAdapter baseQuickAdapter,Context context,int test){
         this.baseQuickAdapter3 = baseQuickAdapter;
         this.context = context;
     }*/
@@ -444,7 +446,36 @@ public class TYUTUtils {
                         Log.d("getClassTag",classBean.getTable().get(0).getMonday());
                         Log.d("getClassTag",classBean.getTable().get(1).getMonday());
                         ClassTable.addClassTableDatas(classBean.getTable());
+                        Log.d("duck","dsds");
+
+                        Log.d("duck","ClassTable.getSize()"+ClassTable.getSize());
                         baseQuickAdapter1.notifyItemInserted(ClassTable.getSize());
+                        Log.d("duck","addad");
+                    }
+                });
+    }
+
+    public void getClassArray(String username,String password){
+        services.GetClassArray(username,password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ClassArrangeBean>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("classArrayTag","onComlpeted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("classArrayTag","onError"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ClassArrangeBean classArrangeBean) {
+                        ClassArray.addClassArrayDatas(classArrangeBean.getInfo());
+                        Log.d("holyshirt","beforeNotifyItemInsered");
+                        baseQuickAdapter2.notifyItemInserted(ClassArray.getSize());
+                        Log.d("holyshirt","afterNotifyItemInsered");
                     }
                 });
     }

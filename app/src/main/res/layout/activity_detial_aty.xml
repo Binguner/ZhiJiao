@@ -21,9 +21,11 @@
 
         <ImageView
             android:padding="10dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="20dp"
             android:id="@+id/detial_back_btn"
-            android:layout_width="40dp"
-            android:layout_height="48dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:src="@mipmap/back_white_48"/>
 
         <TextView
@@ -35,10 +37,11 @@
 
         <ImageView
             android:id="@+id/detialsettingpoint"
-            android:layout_marginEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
             android:layout_gravity="right"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:src="@mipmap/point_white_24"/>
 
     </android.support.v7.widget.Toolbar>
