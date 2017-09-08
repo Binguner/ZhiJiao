@@ -79,7 +79,29 @@
         android:layout_height="1dp"
         android:background="@color/colorGray"/>
 
+    <com.example.binguner.zhijiao.View.WaveView
+        android:id="@+id/grades_waveView1"
+        app:layout_constraintTop_toBottomOf="@+id/grade_line"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_jiaoSuDu="2"
+        app:waveView_zhengFu="30"
+        app:waveView_pianJu="0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.example.binguner.zhijiao.View.WaveView
+        android:id="@+id/grades_waveView2"
+        app:waveView_jiaoSuDu="1"
+        app:waveView_pianJu="0"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_chuXiang="3"
+        app:waveView_zhengFu="30"
+        app:layout_constraintTop_toBottomOf="@+id/grade_line"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.v7.widget.RecyclerView
+        android:visibility="invisible"
         android:background="@color/colorBackGround"
         android:id="@+id/grade_recyclerview"
         android:layout_width="match_parent"

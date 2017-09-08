@@ -1,5 +1,6 @@
 package com.example.binguner.zhijiao.Adapter;
 
+import android.icu.text.IDNA;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
@@ -23,10 +24,19 @@ import butterknife.ButterKnife;
 
 public class ClassArrayAdapter extends BaseQuickAdapter<ClassArrangeBean.InfoBean,ClassArrayAdapter.MyViewHolder> {
 
-    private List<ClassArrangeBean.InfoBean> infoBeans = new ArrayList<>();
+    private List<ClassArrangeBean.InfoBean> infoBeans = new ArrayList<ClassArrangeBean.InfoBean>();
+
     public ClassArrayAdapter(int layoutResId, @Nullable List<ClassArrangeBean.InfoBean> data) {
         super(layoutResId, data);
         this.infoBeans = data;
+    }
+
+    public void deleteAllBeans(){
+        this.infoBeans.clear();
+    }
+
+    public void addBeans(List<ClassArrangeBean.InfoBean> minfoBeans){
+        this.infoBeans.addAll(minfoBeans);
     }
 
     @Override
@@ -36,8 +46,6 @@ public class ClassArrayAdapter extends BaseQuickAdapter<ClassArrangeBean.InfoBea
             Log.d("holyshirt","Now_inAdapternow");
             Log.d("holyshirt",""+infoBeans.size());
             Log.d("holyshirt",item.getAddress());
-
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -48,11 +56,14 @@ public class ClassArrayAdapter extends BaseQuickAdapter<ClassArrangeBean.InfoBea
             }else {
                 helper.setText(R.id.class_array_name,infoBeans.get(position).getName());
                 helper.setText(R.id.class_array_teacher,infoBeans.get(position).getTeacher());
+
                 helper.setText(R.id.class_array_weekDay1,infoBeans.get(position).getWeekDay());
                 helper.setText(R.id.class_array_starAndEnd1,infoBeans.get(position).getStarAndEnd());
                 helper.setText(R.id.class_array_address1,infoBeans.get(position).getAddress());
                 helper.setText(R.id.class_array_classRoom1,infoBeans.get(position).getClassRoom());
+                Log.d("psotionTag",(position+1)+"个");
                 if(infoBeans.get(position+1).getName().isEmpty()){
+                    Log.d("psotionTag",(position+1)+"个");
                     helper.setText(R.id.class_array_weekDay2,infoBeans.get(position+1).getWeekDay());
                     helper.setText(R.id.class_array_starAndEnd2,infoBeans.get(position+1).getStarAndEnd());
                     helper.setText(R.id.class_array_address2,infoBeans.get(position+1).getAddress());

@@ -1,7 +1,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="10dp"
     android:paddingStart="10dp"
@@ -12,12 +12,12 @@
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/achieve_nestedscrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:paddingBottom="10dp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/btn_achieve_searchgrades"
@@ -55,6 +55,15 @@
                 android:layout_height="wrap_content"
                 android:text="学期课表"/>
             <Button
+                android:id="@+id/btn_achieve_studentinfo"
+                android:background="@drawable/main_btn_bg1"
+                android:textSize="30dp"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="课表详情"/>
+            <Button
                 android:id="@+id/btn_achieve_easyjudge"
                 android:background="@drawable/main_btn_bg1"
                 android:textSize="30dp"
@@ -63,15 +72,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="一键评教"/>
-            <Button
-                android:id="@+id/btn_achieve_studentinfo"
-                android:background="@drawable/main_btn_bg1"
-                android:textSize="30dp"
-                android:textColor="@color/colorWhite"
+
+            <ImageView
                 android:layout_marginTop="10dp"
+                android:background="@color/colorBackGround"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="XJXX_课表详情"/>
+                android:layout_height="2dp" />
 
         </LinearLayout>
 

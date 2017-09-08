@@ -1,5 +1,6 @@
 package com.example.binguner.zhijiao.UI;
 
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.example.binguner.zhijiao.CallBack.CallBackGrades;
 import com.example.binguner.zhijiao.Entity.GradesBean;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
+import com.example.binguner.zhijiao.View.WaveView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,9 @@ public class SearchGrades extends AppCompatActivity {
     //private int flag = 0;
     @BindView(R.id.grade_refresh)
     ImageView grade_refresh;
+    @BindView(R.id.grades_waveView1) WaveView grades_waveView1;
+    @BindView(R.id.grades_waveView2) WaveView grades_waveView2;
+    private List<WaveView> waveViews = new ArrayList<>();
 
     private LinearLayoutManager linearLayoutManager;
     private Grade_Adapter grade_adapter;
@@ -96,7 +101,10 @@ public class SearchGrades extends AppCompatActivity {
             }
         });
         if(flag == 0){*/
-            tyutUtils.GetGrades("2016006593","144517");
+        SharedPreferences sharedPreferences = getSharedPreferences("mUserInfo",MODE_PRIVATE);
+        String username = sharedPreferences.getString("username","");
+        String password = sharedPreferences.getString("password","");
+            tyutUtils.GetGrades(username,password);
             /*flag = 1;
         }else if (flag == 1){
             // Do noting;
@@ -114,12 +122,14 @@ public class SearchGrades extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        tyutUtils.GetGrades("2016006593","144517");
+        firstLoad();
     }
 
     private void initId() {
+        waveViews.add(grades_waveView1);
+        waveViews.add(grades_waveView2);
         grade_adapter = new Grade_Adapter(R.layout.card_layout_grades,infoBeans);
-        tyutUtils = new TYUTUtils(this,grade_adapter);
+        tyutUtils = new TYUTUtils(this,grade_adapter,waveViews,grade_recyclerview);
     }
 
     public static void addGradeDatas(List<GradesBean.InfoBean> minfoBeans){

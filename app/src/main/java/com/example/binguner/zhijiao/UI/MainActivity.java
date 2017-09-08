@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private static CallBackType callBackType;
     private AppBarLayout main_activity_appbarlayou;
     private int anim_flag;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,9 +214,27 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.login_logout:
-                        Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                        SharedPreferences sharedPreferences = getSharedPreferences("mUserInfo",MODE_PRIVATE);
+                        username = sharedPreferences.getString("username","");
+                        if(username.equals("")){
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }else if(!username.equals("")){
+                            SharedPreferences sharedPreferences1 = getSharedPreferences("mUserInfo",MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences1.edit();
+                            editor.putString("username","");
+                            editor.putString("password","");
+                            editor.commit();
+                             final Snackbar snackbar = Snackbar.make(getWindow().getDecorView(),"退出成功",Snackbar.LENGTH_SHORT);
+                                    snackbar.setAction("Undo", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            snackbar.dismiss();
+                                        }
+                                    }).show();
+                        }
+                        //Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
+
                         break;
                     case R.id.about:
                         Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
@@ -332,6 +351,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initId() {
+        SharedPreferences sharedPreferences = getSharedPreferences("mUserInfo",MODE_PRIVATE);
+        username = sharedPreferences.getString("username","");
         main_activity_collapsingToolbarLayout = findViewById(R.id.main_activity_collapsingToolbarLayout);
         work_type_name = findViewById(R.id.work_type_name);
         work_for_more_btn = findViewById(R.id.work_for_more_btn);

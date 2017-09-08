@@ -29,7 +29,28 @@
             android:src="@mipmap/refresh_48_white"/>
 
     </android.support.v7.widget.Toolbar>
+    <com.example.binguner.zhijiao.View.WaveView
+        android:id="@+id/class_array_waveView1"
+        app:layout_constraintTop_toBottomOf="@+id/class_array_toolbar"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_jiaoSuDu="2"
+        app:waveView_zhengFu="30"
+        app:waveView_pianJu="0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.example.binguner.zhijiao.View.WaveView
+        android:id="@+id/class_array_waveView2"
+        app:waveView_jiaoSuDu="1"
+        app:waveView_pianJu="0"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_chuXiang="3"
+        app:waveView_zhengFu="30"
+        app:layout_constraintTop_toBottomOf="@+id/class_array_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <android.support.v7.widget.RecyclerView
+        android:visibility="invisible"
         android:id="@+id/class_array_recyclerview"
         android:layout_marginTop="56dp"
         android:background="@color/colorGrayAlittle"

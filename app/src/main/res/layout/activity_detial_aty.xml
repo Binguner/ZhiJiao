@@ -48,6 +48,7 @@
 
     <com.example.binguner.zhijiao.View.WaveView
         android:id="@+id/detial_waveView"
+        app:waveView_color="@color/colorBlue"
         app:layout_constraintTop_toBottomOf="@+id/detialToolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

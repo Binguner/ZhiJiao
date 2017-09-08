@@ -3,12 +3,19 @@ package com.example.binguner.zhijiao.RxUtils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.binguner.zhijiao.Adapter.ClassArrayAdapter;
 import com.example.binguner.zhijiao.CallBack.CallBackGrades;
+import com.example.binguner.zhijiao.CallBack.CallBackSuccedLogin;
 import com.example.binguner.zhijiao.Entity.AnnouncementBean;
 import com.example.binguner.zhijiao.Entity.ClassArrangeBean;
 import com.example.binguner.zhijiao.Entity.ClassBean;
@@ -19,20 +26,24 @@ import com.example.binguner.zhijiao.BuildConfig;
 import com.example.binguner.zhijiao.CallBack.CallBackStatus;
 import com.example.binguner.zhijiao.Fragments.AnnouncementFragment;
 import com.example.binguner.zhijiao.Fragments.WorkFragment;
+import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.Services.TYUTservices;
 import com.example.binguner.zhijiao.UI.ClassArray;
 import com.example.binguner.zhijiao.UI.ClassTable;
+import com.example.binguner.zhijiao.UI.LoginActivity;
 import com.example.binguner.zhijiao.UI.SearchGrades;
 import com.example.binguner.zhijiao.Utils.AddCookiesInterceptor;
 import com.example.binguner.zhijiao.Utils.NetworkUtils;
 import com.example.binguner.zhijiao.Utils.ReceivedCookiesInterceptor;
 
 import com.example.binguner.zhijiao.Utils.UserUtil;
+import com.example.binguner.zhijiao.View.WaveView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +57,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.HttpException;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -71,6 +83,11 @@ public class TYUTUtils {
     private List<WorkBean.InfoBean> workInfoBeans = null;
     private String path;
     private CallBackGrades callBackGrades;
+    private CallBackSuccedLogin callBackSuccedLogin;
+    private ClassArrayAdapter classArrayAdapter;
+    private List<WaveView> waveViews = new ArrayList<>();
+    //private WaveView waveView;
+    private RecyclerView recyclerView;
     // private String BigcookleStr;
     private static UserUtil userUtil = new UserUtil();
 
@@ -84,22 +101,37 @@ public class TYUTUtils {
         this.context = context;
     }
 
+    public TYUTUtils(BaseQuickAdapter baseQuickAdapter, Context context,List<WaveView> waveViews, RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+        this.baseQuickAdapter1 = baseQuickAdapter;
+        this.waveViews = waveViews;
+        this.context = context;
+    }
+
     public TYUTUtils(BaseQuickAdapter baseQuickAdapter, SwipeRefreshLayout swipeRefreshLayout, Context context) {
         this.baseQuickAdapter = baseQuickAdapter;
         this.swipeRefreshLayout = swipeRefreshLayout;
         this.context = context;
     }
-    /*public TYUTUtils(BaseQuickAdapter baseQuickAdapter,Context context,int test){
-        this.baseQuickAdapter3 = baseQuickAdapter;
+
+    public TYUTUtils(ClassArrayAdapter classArrayAdapter, Context context,List<WaveView> waveViews,RecyclerView recyclerView) {
+        this.waveViews = waveViews;
+        this.recyclerView = recyclerView;
+        this.classArrayAdapter = classArrayAdapter;
         this.context = context;
-    }*/
-    public TYUTUtils(Context context,BaseQuickAdapter baseQuickAdapter){
+    }
+
+    public TYUTUtils(Context context, BaseQuickAdapter baseQuickAdapter,List<WaveView> waveViews,RecyclerView recyclerView) {
         this.context = context;
+        this.waveViews = waveViews;
+        this.recyclerView = recyclerView;
         this.baseQuickAdapter2 = baseQuickAdapter;
     }
-    public void setCallBack(@Nullable CallBackStatus callBackStatus,@Nullable CallBackGrades callBackGrades) {
+
+    public void setCallBack(@Nullable CallBackStatus callBackStatus, @Nullable CallBackGrades callBackGrades,@Nullable CallBackSuccedLogin callBackSuccedLogin) {
         this.callBackStatus = callBackStatus;
         this.callBackGrades = callBackGrades;
+        this.callBackSuccedLogin = callBackSuccedLogin;
     }
 
     Gson gson = new GsonBuilder()
@@ -167,6 +199,7 @@ public class TYUTUtils {
             public Response intercept(Chain chain) throws IOException {
                 Response response = chain.proceed(chain.request());
                 List<String> cookies = response.headers("Set-Cookie");
+                JSESSIONID=1C01E919EA03FC3D4ED35F71A8DEFB71;path=/;HttpOnly
                 String cookieStr = "";
                 if (cookies != null && cookies.size() > 0) {
                     for (int i = 0; i < cookies.size(); i++) {
@@ -251,8 +284,9 @@ public class TYUTUtils {
                             //Log.d("TESTTAG", announcementBean.getInfo().get(1).getUpdate());
 
                             AnnouncementFragment.AddDatas(announcementBean.getInfo());
+                            baseQuickAdapter.notifyDataSetChanged();
                             baseQuickAdapter.notifyItemInserted(AnnouncementFragment.getSize());
-                            callBackStatus.callBackRefreshing(1);
+                            //callBackStatus.callBackRefreshing(1);
                         } catch (Exception e) {
                             Log.d("TESTTAG", e.toString());
                         }
@@ -285,6 +319,7 @@ public class TYUTUtils {
 
                     @Override
                     public void onError(Throwable e) {
+                        Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
                         Log.d("workTag", "onError : " + e.toString());
                     }
 
@@ -317,6 +352,7 @@ public class TYUTUtils {
                         }
                         Log.d("whasdad", "add ");
                         WorkFragment.addWorkDatas(workInfoBeans);
+                        baseQuickAdapter1.notifyDataSetChanged();
                         baseQuickAdapter1.notifyItemInserted(WorkFragment.getSize());
 
 
@@ -324,7 +360,7 @@ public class TYUTUtils {
                 });
     }
 
-    public void firstLogin(String username, String password) {
+    public void firstLogin(final String username, final String password) {
         services.FirsrLogin(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -332,40 +368,59 @@ public class TYUTUtils {
                     @Override
                     public void onCompleted() {
                         Log.d("LoginTag", "Compleded");
+                        SharedPreferences sharedPreferences = context.getSharedPreferences("mUserInfo", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", username);
+                        editor.putString("password", password);
+                        editor.commit();
+                        Toast.makeText(context,"登陆成功",Toast.LENGTH_SHORT).show();
+                        callBackSuccedLogin.callBackLoginStats(1);
+                        //1 succeed    0 failed
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
                         Log.d("LoginTag", "onError: " + e.toString());
                     }
 
                     @Override
                     public void onNext(LoginBean loginBean) {
-                        Log.d("LoginTag", loginBean.getUsername());
-                        Log.d("LoginTag", loginBean.getMessage());
-                        SharedPreferences sharedPreferences = context.getSharedPreferences("username", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("username", loginBean.getUsername());
-                        editor.commit();
+                        try {
+                            Log.d("LoginTag", loginBean.getUsername());
+                            Log.d("LoginTag", loginBean.getMessage());
+                            SharedPreferences sharedPreferences = context.getSharedPreferences("username", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("username", loginBean.getUsername());
+                            editor.commit();
+                        }catch (Exception e){
+                            Toast.makeText(context,"登陆超时，服务器出错了..或者有可能教务处挂了，请重试，或者联系我⬇️ :(",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
 
     public void GetGrades(final String username, final String password/*final String username, String password*/) {
-        services.GetGrades(username,password)
+        services.GetGrades(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GradesBean>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("LoginTag","Completed");
+                        Log.d("LoginTag", "Completed");
+                        for(int i = 0; i<waveViews.size();i++){
+                            waveViews.get(i).setVisibility(View.INVISIBLE);
+                        }
+                        recyclerView.setVisibility(View.VISIBLE);
                         //callBackGrades.callBackGrades(1);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("LoginTag",e.toString());
-                       // callBackGrades.callBackGrades(0);
+                        Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        Log.d("LoginTag", e.toString());
+                        // callBackGrades.callBackGrades(0);
                     }
 
                     @Override
@@ -426,56 +481,74 @@ public class TYUTUtils {
                 });*/
     }
 
-    public void getClass(String username,String password){
-        services.GetClass(username,password)
+    public void getClass(String username, String password) {
+        services.GetClass(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ClassBean>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("getClassTag","onCompleted");
+                        for(int i = 0; i< waveViews.size();i++){
+                            waveViews.get(i).setVisibility(View.INVISIBLE);
+                        }
+                        recyclerView.setVisibility(View.VISIBLE);
+
+                        Log.d("getClassTag", "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("getClassTag","onError: "+e.toString());
+                        Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        Log.d("getClassTag", "onError: " + e.toString());
                     }
 
                     @Override
                     public void onNext(ClassBean classBean) {
-                        Log.d("getClassTag",classBean.getTable().get(0).getMonday());
-                        Log.d("getClassTag",classBean.getTable().get(1).getMonday());
+                        Log.d("getClassTag", classBean.getTable().get(0).getMonday());
+                        Log.d("getClassTag", classBean.getTable().get(1).getMonday());
                         ClassTable.addClassTableDatas(classBean.getTable());
-                        Log.d("duck","dsds");
+                        Log.d("duck", "dsds");
 
-                        Log.d("duck","ClassTable.getSize()"+ClassTable.getSize());
+                        Log.d("duck", "ClassTable.getSize()" + ClassTable.getSize());
                         baseQuickAdapter1.notifyItemInserted(ClassTable.getSize());
-                        Log.d("duck","addad");
+                        Log.d("duck", "addad");
                     }
                 });
     }
 
-    public void getClassArray(String username,String password){
-        services.GetClassArray(username,password)
+    public void getClassArray(String username, String password) {
+        services.GetClassArray(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ClassArrangeBean>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("classArrayTag","onComlpeted");
+                        Log.d("classArrayTag", "onComlpeted");
+                        for(int i = 0; i<waveViews.size();i++){
+                            waveViews.get(i).setVisibility(View.INVISIBLE);
+                        }
+                        recyclerView.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("classArrayTag","onError"+e.toString());
+                        Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        Log.d("classArrayTag", "onError: " + e.getLocalizedMessage());
+                        Log.d("classArrayTag", "onError: " + e.getMessage());
+                        Log.d("classArrayTag", "onError: " + e.getCause());
+                        Log.d("classArrayTag", "onError: " + e.toString());
+                        Log.d("classArrayTag", "onError: " + e.getStackTrace());
                     }
 
                     @Override
                     public void onNext(ClassArrangeBean classArrangeBean) {
-                        ClassArray.addClassArrayDatas(classArrangeBean.getInfo());
-                        Log.d("holyshirt","beforeNotifyItemInsered");
-                        baseQuickAdapter2.notifyItemInserted(ClassArray.getSize());
-                        Log.d("holyshirt","afterNotifyItemInsered");
+                        Log.d("holyshirt", "fitst");
+                        classArrayAdapter.addBeans(classArrangeBean.getInfo());
+                        classArrayAdapter.notifyDataSetChanged();
+                        //ClassArray.addClassArrayDatas(classArrangeBean.getInfo());
+                        Log.d("holyshirt", "beforeNotifyItemInsered");
+                        classArrayAdapter.notifyItemInserted(classArrangeBean.getInfo().size());
+                        Log.d("holyshirt", "afterNotifyItemInsered:" + ClassArray.getSize());
                     }
                 });
     }

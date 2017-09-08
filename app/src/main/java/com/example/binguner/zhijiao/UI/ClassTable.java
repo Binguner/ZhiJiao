@@ -1,5 +1,6 @@
 package com.example.binguner.zhijiao.UI;
 
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.example.binguner.zhijiao.Adapter.Grade_Adapter;
 import com.example.binguner.zhijiao.Entity.ClassBean;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
+import com.example.binguner.zhijiao.View.WaveView;
 
 import java.io.LineNumberReader;
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ public class ClassTable extends AppCompatActivity {
     private static List<ClassBean.TableBean> tableBeans = new ArrayList<>();
     private TYUTUtils tyutUtils;
     private static int flag = 0;
+    private List<WaveView> waveViews = new ArrayList<>();
+    @BindView(R.id.classTable_waveView1) WaveView classTable_waveView1;
+    @BindView(R.id.classTable_waveView2) WaveView classTable_waveView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,6 @@ public class ClassTable extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_class_table);
         ButterKnife.bind(this);
-
         intViews();
         initId();
         firstLoad();
@@ -66,7 +70,10 @@ public class ClassTable extends AppCompatActivity {
     }
 
     private void firstLoad() {
-        tyutUtils.getClass("2016006593","144517");
+        SharedPreferences sharedPreferences = getSharedPreferences("mUserInfo",MODE_PRIVATE);
+        String username = sharedPreferences.getString("username","");
+        String password = sharedPreferences.getString("password","");
+        tyutUtils.getClass(username,password);
     }
 
 
@@ -96,6 +103,9 @@ public class ClassTable extends AppCompatActivity {
                 //oast.makeText(ClassTable.this,"第"+tableBeans.get(position).getFriday(),Toast.LENGTH_SHORT).show();
             }
         });
+
+        waveViews.add(classTable_waveView1);
+        waveViews.add(classTable_waveView2);
     }
 
     @OnClick(R.id.class_table_back)
@@ -115,7 +125,7 @@ public class ClassTable extends AppCompatActivity {
             e.printStackTrace();
         }
        // tyutUtils = new TYUTUtils(class_table_adapter,this);
-        tyutUtils.getClass("2016006593","144517");
+        firstLoad();
 
 
     }
@@ -123,6 +133,6 @@ public class ClassTable extends AppCompatActivity {
 
 
     private void initId() {
-        tyutUtils = new TYUTUtils(class_table_adapter,this);
+        tyutUtils = new TYUTUtils(class_table_adapter,this,waveViews,class_table_recyclerview);
     }
 }

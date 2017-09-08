@@ -13,12 +13,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.binguner.zhijiao.CallBack.CallBackSuccedLogin;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 
@@ -105,19 +107,23 @@ public class LoginActivity extends AppCompatActivity {
                     password_textinputlayout.setErrorEnabled(false);
                 }
                 tyutUtils.firstLogin(username,password);
-
+                tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
+                    @Override
+                    public void callBackLoginStats(int stats) {
+                        if(stats == 1){
+                            LoginActivity.this.finish();
+                        }
+                    }
+                });
 
             }
         });
-
-
-
-
     }
+    
 
     private void initViews() {
         username_textinputlayout.setHint("Username");
-        ed_username.setTextColor(R.color.colorWhite);
+        ed_username.setTextColor(getResources().getColor(R.color.colorWhite));
         password_textinputlayout.setHint("Password");
     }
 

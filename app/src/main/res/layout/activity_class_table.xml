@@ -102,7 +102,29 @@
         android:background="@color/colorGrayAlittle"
         android:layout_width="match_parent"
         android:layout_height="2dp" />
+
+    <com.example.binguner.zhijiao.View.WaveView
+        android:id="@+id/classTable_waveView1"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_shadow_under_day"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_jiaoSuDu="2"
+        app:waveView_zhengFu="30"
+        app:waveView_pianJu="0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.example.binguner.zhijiao.View.WaveView
+        android:id="@+id/classTable_waveView2"
+        app:waveView_jiaoSuDu="1"
+        app:waveView_pianJu="0"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_chuXiang="3"
+        app:waveView_zhengFu="30"
+        app:layout_constraintTop_toBottomOf="@+id/class_table_shadow_under_day"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <android.support.v7.widget.RecyclerView
+        android:visibility="invisible"
         android:layout_marginTop="77dp"
         app:layout_constraintTop_toBottomOf="@+id/class_table_shadow_under_day"
         android:background="@color/colorBackGround"

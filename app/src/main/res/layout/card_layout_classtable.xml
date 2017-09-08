@@ -8,7 +8,10 @@
     <Button
         android:id="@+id/card_layout_time"
         android:layout_width="50dp"
+        android:singleLine="false"
         android:background="@drawable/classtable_bg0"
+        app:layout_constraintRight_toLeftOf="@+id/card_layout_class_table_mon"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_height="140dp"
         android:text="第一小节(08:00-08:50)"/>
     <android.support.constraint.Guideline

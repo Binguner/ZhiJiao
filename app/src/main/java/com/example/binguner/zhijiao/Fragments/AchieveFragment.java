@@ -131,8 +131,6 @@ public class AchieveFragment extends Fragment {
                 //Toast.makeText(getContext(),"学籍信息",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), ClassArray.class);
                 startActivity(intent);
-                //TYUTUtils tyutUtils = new TYUTUtils(getContext());
-                //tyutUtils.getClassArray("2016006593","144517");
             }
         });
     }
