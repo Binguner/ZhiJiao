@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +16,19 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +39,7 @@ import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Interceptor;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,9 +55,12 @@ public class LoginActivity extends AppCompatActivity {
     EditText ed_username;
     @BindView(R.id.ed_password)
     EditText ed_password;
+    @BindView(R.id.islongint_rot)
+    ImageView islongint_rot;
 
     String username,password;
     TYUTUtils tyutUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_login);
@@ -99,25 +115,77 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this,"Clicked "+username+" "+password,Toast.LENGTH_SHORT).show();
                 if(username.isEmpty()){
                     username_textinputlayout.setError("Please input the username !");
+                }else {
+                    username_textinputlayout.setErrorEnabled(false);
                 }
                 if(password.isEmpty()){
                     password_textinputlayout.setError("Please input the password !");
                 }else {
-                    username_textinputlayout.setErrorEnabled(false);
+                   // username_textinputlayout.setErrorEnabled(false);
                     password_textinputlayout.setErrorEnabled(false);
                 }
-                tyutUtils.firstLogin(username,password);
-                tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
-                    @Override
-                    public void callBackLoginStats(int stats) {
-                        if(stats == 1){
-                            LoginActivity.this.finish();
-                        }
-                    }
-                });
+                hideKeybord();
+                if(!password.isEmpty()&&!username.isEmpty()){
+                    setIsLoging(view);
+                    startRo();
+                    tyutUtils.firstLogin(username,password);
+                    tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
+                        @Override
+                        public void callBackLoginStats(int stats) {
+                            if(stats == 1){
+                                islongint_rot.setVisibility(View.GONE);
+                                LoginActivity.this.finish();
 
+                            }
+                            if(stats == 0){
+                                Log.d("hrere","rerer");
+                                islongint_rot.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+                }
             }
         });
+
+    }
+
+
+    private void setIsLoging(View view){
+        islongint_rot.setVisibility(View.VISIBLE);
+        /*popupWindow = new PopupWindow(this);
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setContentView(LayoutInflater.from(this).inflate(R.layout.isloginglayout,null));
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00808080));
+        popupWindow.setOutsideTouchable(false);
+        popupWindow.setFocusable(true);
+        popupWindow.showAsDropDown(view);*/
+        //popupWindow.showAtLocation(panrnt,Gravity.CENTER,0,0);
+    }
+
+    private void startRo(){
+        /*View view = LayoutInflater.from(this).inflate(R.layout.isloginglayout,null);
+        ImageView imageView = view.findViewById(R.id.isloging_rot);
+        Log.d("rotating","before");
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.loging_ro);
+       // imageView.setAnimation(animation);
+        Log.d("rotating",imageView.toString());
+        view.startAnimation(animation);
+        loginbtn.startAnimation(animation);
+        canclebtn.startAnimation(animation);
+        Log.d("rotating","after");*/
+        LinearInterpolator linearInterpolator = new LinearInterpolator();
+        Animation animation = AnimationUtils.loadAnimation(this,R.anim.loging_ro);
+        animation.setInterpolator(linearInterpolator);
+        islongint_rot.startAnimation(animation);
+    }
+
+    private void hideKeybord(){
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View view = getCurrentFocus();
+        if(view!=null){
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
     
 
@@ -125,6 +193,7 @@ public class LoginActivity extends AppCompatActivity {
         username_textinputlayout.setHint("Username");
         ed_username.setTextColor(getResources().getColor(R.color.colorWhite));
         password_textinputlayout.setHint("Password");
+        getWindow().setBackgroundDrawable(getResources().getDrawable(R.mipmap.login_bg1));
     }
 
     private void initId() {

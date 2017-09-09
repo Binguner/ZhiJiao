@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
 import com.example.binguner.zhijiao.UI.ClassArray;
 import com.example.binguner.zhijiao.UI.ClassTable;
 import com.example.binguner.zhijiao.UI.FooterView;
+import com.example.binguner.zhijiao.UI.LoginActivity;
 import com.example.binguner.zhijiao.UI.SearchGrades;
 
 import java.util.regex.Matcher;
@@ -74,8 +76,22 @@ public class AchieveFragment extends Fragment {
                 //String username = sharedPreferences.getString("username",null);
                 //Log.d("LoginTag",username+"");
 
-                Intent intent = new Intent(getContext(), SearchGrades.class);
-                startActivity(intent);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mUserInfo",Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username","");
+                if(username.equals("")){
+                    final Snackbar snackbar = Snackbar.make(getActivity().getWindow().getDecorView(),"请先登陆 :)",Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("Login", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            snackbar.dismiss();
+                            Intent intent = new Intent(getContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    }).show();
+                }else {
+                    Intent intent = new Intent(getContext(), SearchGrades.class);
+                    startActivity(intent);
+                }
                 /*try {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("cookie",Context.MODE_PRIVATE);
                     String mCookie = sharedPreferences.getString("cookie1",null);
@@ -91,6 +107,11 @@ public class AchieveFragment extends Fragment {
         btn_achieve_grades_ranks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mUserInfo",Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username","");
+                if(username.equals("")){
+
+                }
                 Toast.makeText(getContext(),"成绩排名",Toast.LENGTH_SHORT).show();
             }
         });
@@ -115,8 +136,22 @@ public class AchieveFragment extends Fragment {
                // Toast.makeText(getContext(),"学期课表",Toast.LENGTH_SHORT).show();
                 //TYUTUtils tyutUtils = new TYUTUtils(getContext());
                 //tyutUtils.getClass();
-                Intent intent = new Intent(getContext(), ClassTable.class);
-                startActivity(intent);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mUserInfo",Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username","");
+                if(username.equals("")){
+                    final Snackbar snackbar = Snackbar.make(getActivity().getWindow().getDecorView(),"请先登陆 :)",Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("Login", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            snackbar.dismiss();
+                            Intent intent = new Intent(getContext(),LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    }).show();
+                }else {
+                    Intent intent = new Intent(getContext(), ClassTable.class);
+                    startActivity(intent);
+                }
             }
         });
         btn_achieve_easyjudge.setOnClickListener(new View.OnClickListener() {
@@ -129,8 +164,22 @@ public class AchieveFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(getContext(),"学籍信息",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), ClassArray.class);
-                startActivity(intent);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mUserInfo",Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username","");
+                if(username.equals("")){
+                    final Snackbar snackbar = Snackbar.make(getActivity().getWindow().getDecorView(),"请先登陆 :)",Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("Login", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            snackbar.dismiss();
+                            Intent intent = new Intent(getContext(),LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    }).show();
+                }else {
+                     Intent intent = new Intent(getContext(), ClassArray.class);
+                    startActivity(intent);
+                }
             }
         });
     }

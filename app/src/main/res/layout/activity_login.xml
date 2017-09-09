@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_constraintlayout"
     android:layout_width="match_parent"
-    android:background="@mipmap/login_bg1"
+    android:background="@mipmap/login_bg3"
     android:layout_height="match_parent"
     tools:context="com.example.binguner.zhijiao.UI.LoginActivity">
 
@@ -17,6 +17,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
         app:layout_constraintVertical_bias="0.15"
         android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_bias="0.6"
         android:textColor="@color/colorWhite"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
@@ -38,6 +39,7 @@
         android:textColorHint="@color/colorWhite"
         app:hintTextAppearance="@style/hintAppearance"
         app:counterMaxLength="10"
+
         android:layout_height="wrap_content">
         <EditText
             android:id="@+id/ed_username"
@@ -66,6 +68,7 @@
         <EditText
             android:id="@+id/ed_password"
             android:theme="@style/MyEditTextStyle"
+            android:textColor="@color/colorWhite"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,5 +116,17 @@
         android:text="联系我们"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/islongint_rot"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/isloging_blue_128"/>
 
 </android.support.constraint.ConstraintLayout>

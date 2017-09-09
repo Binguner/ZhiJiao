@@ -381,7 +381,8 @@ public class TYUTUtils {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+                        callBackSuccedLogin.callBackLoginStats(0);
+                        Toast.makeText(context, "请检查用户名密码，服务器出错了..或者有可能教务处挂了，请重试，或者联系我⬇️ :(", Toast.LENGTH_SHORT).show();
                         Log.d("LoginTag", "onError: " + e.toString());
                     }
 
@@ -394,8 +395,8 @@ public class TYUTUtils {
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("username", loginBean.getUsername());
                             editor.commit();
-                        }catch (Exception e){
-                            Toast.makeText(context,"登陆超时，服务器出错了..或者有可能教务处挂了，请重试，或者联系我⬇️ :(",Toast.LENGTH_SHORT).show();
+                        }catch (HttpException e){
+                            Toast.makeText(context,"请检查网络(",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

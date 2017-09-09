@@ -49,7 +49,7 @@ public class WaveView extends View {
 
     private void initViews(Context context, @Nullable AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs,R.styleable.WaveView);
-        waveColor = typedArray.getColor(R.styleable.WaveView_waveView_color,R.color.colorBlack);
+        waveColor = typedArray.getColor(R.styleable.WaveView_waveView_color,getResources().getColor(R.color.colorBlack));
         A = typedArray.getInteger(R.styleable.WaveView_waveView_zhengFu,30);
         ω = typedArray.getInteger(R.styleable.WaveView_waveView_jiaoSuDu,4);
         φ = typedArray.getFloat(R.styleable.WaveView_waveView_chuXiang,0);
