@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_findMe)
     void findMe(View v){
-        openQQ(v,"819985138");
+        openQQ(v,"478718805");
     }
 
     private void openQQ(View view,@Nullable String qqNum){
@@ -133,12 +133,14 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void callBackLoginStats(int stats) {
                             if(stats == 1){
-                                islongint_rot.setVisibility(View.GONE);
+                                islongint_rot.setAnimation(null);
+                                islongint_rot.setVisibility(View.INVISIBLE);
                                 LoginActivity.this.finish();
 
                             }
                             if(stats == 0){
                                 Log.d("hrere","rerer");
+                                islongint_rot.setAnimation(null);
                                 islongint_rot.setVisibility(View.INVISIBLE);
                             }
                         }

@@ -15,6 +15,7 @@
         <ImageView
             android:id="@+id/class_array_back"
             android:paddingLeft="20dp"
+            android:foreground="?attr/selectableItemBackground"
             android:paddingEnd="10dp"
             android:layout_width="50dp"
             android:layout_height="match_parent"
@@ -22,6 +23,7 @@
         <ImageView
             android:id="@+id/class_array_refresh"
             android:layout_width="50dp"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_height="match_parent"
             android:paddingStart="10dp"
             android:paddingEnd="20dp"
@@ -29,6 +31,16 @@
             android:src="@mipmap/refresh_48_white"/>
 
     </android.support.v7.widget.Toolbar>
+    <TextView
+        android:id="@+id/isHardLoading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/colorBlueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正在拼命加载..."/>
     <com.example.binguner.zhijiao.View.WaveView
         android:id="@+id/class_array_waveView1"
         app:layout_constraintTop_toBottomOf="@+id/class_array_toolbar"

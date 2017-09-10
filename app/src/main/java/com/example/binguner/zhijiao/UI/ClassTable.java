@@ -8,11 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Adapter.Class_Table_Adapter;
 import com.example.binguner.zhijiao.Adapter.Grade_Adapter;
+import com.example.binguner.zhijiao.CallBack.CallBackSuccedLogin;
 import com.example.binguner.zhijiao.Entity.ClassBean;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
@@ -29,8 +31,8 @@ import butterknife.OnClick;
 public class ClassTable extends AppCompatActivity {
 
 
-    @BindView(R.id.class_table_recyclerview)
-    RecyclerView class_table_recyclerview;
+    @BindView(R.id.class_table_recyclerview) RecyclerView class_table_recyclerview;
+    @BindView(R.id.class_table_isHardLoading) TextView class_table_isHardLoading;
     private LinearLayoutManager linearLayoutManager;
     private Class_Table_Adapter class_table_adapter;
     private static List<ClassBean.TableBean> tableBeans = new ArrayList<>();
@@ -74,6 +76,14 @@ public class ClassTable extends AppCompatActivity {
         String username = sharedPreferences.getString("username","");
         String password = sharedPreferences.getString("password","");
         tyutUtils.getClass(username,password);
+        tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
+            @Override
+            public void callBackLoginStats(int stats) {
+                if(stats == 1){
+                    class_table_isHardLoading.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
 
@@ -115,6 +125,11 @@ public class ClassTable extends AppCompatActivity {
 
     @OnClick(R.id.class_table_refresh)
     void refresh(){
+        class_table_isHardLoading.setVisibility(View.VISIBLE);
+        class_table_recyclerview.setVisibility(View.INVISIBLE);
+        classTable_waveView1.setVisibility(View.VISIBLE);
+        classTable_waveView2.setVisibility(View.VISIBLE);
+
         try{
             int size = tableBeans.size();
             for(int i = 0;i<size;i++){

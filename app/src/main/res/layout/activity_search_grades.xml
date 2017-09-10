@@ -89,6 +89,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/search_grades_isHardLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正在拼命加载..."
+        android:textColor="@color/colorBlueText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <com.example.binguner.zhijiao.View.WaveView
         android:id="@+id/grades_waveView2"
         app:waveView_jiaoSuDu="1"

@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case R.id.about:
-                        Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent(MainActivity.this,AboutActivity.class);
                         startActivity(intent1);
                         break;

@@ -16,6 +16,7 @@
         android:background="@color/colorBlue"
         android:layout_height="?attr/actionBarSize">
         <ImageView
+            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/class_table_back"
             android:padding="10dp"
             android:src="@mipmap/back_white_48"
@@ -24,6 +25,7 @@
             android:layout_width="50dp"
             android:layout_height="match_parent" />
         <ImageView
+            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/class_table_refresh"
             android:src="@mipmap/refresh_48_white"
             android:padding="10dp"
@@ -102,6 +104,17 @@
         android:background="@color/colorGrayAlittle"
         android:layout_width="match_parent"
         android:layout_height="2dp" />
+
+    <TextView
+        android:id="@+id/class_table_isHardLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlueText"
+        android:text="正在拼命加载..."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.example.binguner.zhijiao.View.WaveView
         android:id="@+id/classTable_waveView1"

@@ -166,7 +166,7 @@
                         app:layout_constraintStart_toStartOf="@+id/about_card_constraintlayout"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@mipmap/bg1"
+                        android:src="@mipmap/firstdev"
                         />
                     <TextView
                         android:paddingTop="6dp"
@@ -176,7 +176,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="FirstDeve"/>
+                        android:text="Nenguou"/>
                     <TextView
                         android:layout_marginLeft="15dp"
                         app:layout_constraintTop_toBottomOf="@+id/about_deve_1_name"
@@ -185,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
                         android:textColor="@color/colorGray"
-                        android:text="这个人开发了app"/>
+                        android:text="Android 客户端开发"/>
 
                     <!--<TextView
                         android:paddingTop="16dp"
@@ -276,6 +276,7 @@
                 android:layout_marginLeft="5dp"
                 android:paddingStart="5dp"
                 android:paddingRight="5dp"
+                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -288,7 +289,7 @@
             <TextView
                 app:layout_constraintTop_toBottomOf="@+id/about_cardview2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="4dp" />
 
         </android.support.constraint.ConstraintLayout>
 

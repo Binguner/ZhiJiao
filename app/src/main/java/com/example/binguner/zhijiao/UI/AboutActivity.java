@@ -126,10 +126,10 @@ public class AboutActivity extends AppCompatActivity {
         intent.setData(uri);
         startActivity(intent);
     }
-    @OnClick(R.id.about_share)
+   /* @OnClick(R.id.about_share)
     void shareApp(View view){
-        Snackbar.make(view,"Share",Snackbar.LENGTH_SHORT).show();
-    }
+        //Snackbar.make(view,"Share",Snackbar.LENGTH_SHORT).show();
+    }*/
 
     @OnClick(R.id.about_back_btn)
     void back(){

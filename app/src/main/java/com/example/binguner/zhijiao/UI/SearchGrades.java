@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Adapter.Grade_Adapter;
 import com.example.binguner.zhijiao.CallBack.CallBackGrades;
+import com.example.binguner.zhijiao.CallBack.CallBackSuccedLogin;
 import com.example.binguner.zhijiao.Entity.GradesBean;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
@@ -27,11 +29,10 @@ import butterknife.OnClick;
 
 public class SearchGrades extends AppCompatActivity {
 
-    @BindView(R.id.grade_recyclerview)
-    RecyclerView grade_recyclerview;
+    @BindView(R.id.grade_recyclerview) RecyclerView grade_recyclerview;
     //private int flag = 0;
-    @BindView(R.id.grade_refresh)
-    ImageView grade_refresh;
+    @BindView(R.id.search_grades_isHardLoading) TextView search_grades_isHardLoading;
+    @BindView(R.id.grade_refresh) ImageView grade_refresh;
     @BindView(R.id.grades_waveView1) WaveView grades_waveView1;
     @BindView(R.id.grades_waveView2) WaveView grades_waveView2;
     private List<WaveView> waveViews = new ArrayList<>();
@@ -105,6 +106,14 @@ public class SearchGrades extends AppCompatActivity {
         String username = sharedPreferences.getString("username","");
         String password = sharedPreferences.getString("password","");
             tyutUtils.GetGrades(username,password);
+            tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
+                @Override
+                public void callBackLoginStats(int stats) {
+                    if(stats == 1){
+                        search_grades_isHardLoading.setVisibility(View.INVISIBLE);
+                    }
+                }
+            });
             /*flag = 1;
         }else if (flag == 1){
             // Do noting;
@@ -113,6 +122,10 @@ public class SearchGrades extends AppCompatActivity {
 
     @OnClick(R.id.grade_refresh)
     void refresh(){
+        search_grades_isHardLoading.setVisibility(View.VISIBLE);
+        grade_recyclerview.setVisibility(View.INVISIBLE);
+        grades_waveView1.setVisibility(View.VISIBLE);
+        grades_waveView2.setVisibility(View.VISIBLE);
         try{
             int size = infoBeans.size();
             for(int i = 0;i < size; i++){

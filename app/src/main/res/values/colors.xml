@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#307fde</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlue">#307fde</color>
+    <color name="colorBlueText">#5494e1</color>
     <color name="colorBlueTransparent">#b4307fde</color>
     <color name="colorButtonBlue">#64B5F6</color>
     <color name="colorAlpha">#62ffffff</color>

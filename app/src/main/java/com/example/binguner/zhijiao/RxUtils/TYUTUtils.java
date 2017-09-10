@@ -414,6 +414,7 @@ public class TYUTUtils {
                             waveViews.get(i).setVisibility(View.INVISIBLE);
                         }
                         recyclerView.setVisibility(View.VISIBLE);
+                        callBackSuccedLogin.callBackLoginStats(1);
                         //callBackGrades.callBackGrades(1);
                     }
 
@@ -493,6 +494,7 @@ public class TYUTUtils {
                             waveViews.get(i).setVisibility(View.INVISIBLE);
                         }
                         recyclerView.setVisibility(View.VISIBLE);
+                        callBackSuccedLogin.callBackLoginStats(1);
 
                         Log.d("getClassTag", "onCompleted");
                     }
@@ -529,6 +531,7 @@ public class TYUTUtils {
                             waveViews.get(i).setVisibility(View.INVISIBLE);
                         }
                         recyclerView.setVisibility(View.VISIBLE);
+                        callBackSuccedLogin.callBackLoginStats(1);
                     }
 
                     @Override

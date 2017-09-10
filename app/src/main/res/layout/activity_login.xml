@@ -39,7 +39,7 @@
         android:textColorHint="@color/colorWhite"
         app:hintTextAppearance="@style/hintAppearance"
         app:counterMaxLength="10"
-
+        app:counterTextAppearance="@style/hintAppearance"
         android:layout_height="wrap_content">
         <EditText
             android:id="@+id/ed_username"
