@@ -1,6 +1,8 @@
 package com.example.binguner.zhijiao.UI;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -111,6 +113,16 @@ public class SearchGrades extends AppCompatActivity {
                 public void callBackLoginStats(int stats) {
                     if(stats == 1){
                         search_grades_isHardLoading.setVisibility(View.INVISIBLE);
+                    }else if(stats == 2){
+                        final Snackbar snackbar = Snackbar.make(getWindow().getDecorView(),"请检查网络",Snackbar.LENGTH_SHORT);
+                        snackbar.setAction("Check", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                startActivity(intent);
+                                snackbar.dismiss();
+                            }
+                        }).show();
                     }
                 }
             });

@@ -3,11 +3,14 @@ package com.example.binguner.zhijiao.Fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Adapter.Work_Announcement_Adapter;
+import com.example.binguner.zhijiao.CallBack.CallBackSuccedLogin;
 import com.example.binguner.zhijiao.Entity.AnnouncementBean;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.RxUtils.TYUTUtils;
@@ -42,7 +46,7 @@ public class AnnouncementFragment extends Fragment {
     private static List<AnnouncementBean.InfoBean> infoBeans = new ArrayList<>();
     private TYUTUtils tyutUtils;
     private int lastItemPosition;
-    private int page = 1;
+    private static int page = 1;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -74,6 +78,22 @@ public class AnnouncementFragment extends Fragment {
         //第一次加载数据
         //announcement_swiperefreshlayout.setRefreshing(true);
         tyutUtils.getAnnouncements(page);
+        tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
+            @Override
+            public void callBackLoginStats(int stats) {
+                if(stats == 1){
+
+                }else if(stats == 2){
+                    final Snackbar snackbar = Snackbar.make(getView(),"请检查网络",Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("Undo", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            snackbar.dismiss();
+                        }
+                    }).show();
+                }
+            }
+        });
        /* tyutUtils.setCallBack(new CallBackStatus() {
             @Override
             public void callBackRefreshing(int status) {
@@ -97,8 +117,35 @@ public class AnnouncementFragment extends Fragment {
             public void onRefresh() {
                 announcement_swiperefreshlayout.setRefreshing(true);
                 //重新加载
+                DelateAllDatas();
+                page = 1;
                 announcement_swiperefreshlayout.setRefreshing(false);
-                Toast.makeText(getContext(),"刷新完毕",Toast.LENGTH_SHORT).show();
+                tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
+                    @Override
+                    public void callBackLoginStats(int stats) {
+                        Log.d("Testjaja",stats+"");
+                        if(stats == 1){
+                            final Snackbar snackbar = Snackbar.make(getView(),"加载完毕",Snackbar.LENGTH_SHORT);
+                            snackbar.setAction("Undo", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    snackbar.dismiss();
+                                }
+                            }).show();
+                        }else if(stats == 2){
+                            final Snackbar snackbar = Snackbar.make(getView(),"请检查网络",Snackbar.LENGTH_SHORT);
+                            snackbar.setAction("Check", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                    startActivity(intent);
+                                    snackbar.dismiss();
+                                }
+                            }).show();
+                        }
+                    }
+                });
+                //Toast.makeText(getContext(),"刷新完毕",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -174,6 +221,19 @@ public class AnnouncementFragment extends Fragment {
             }
         });
     }
+    private void DelateAllDatas(){
+        try{
+            int size = infoBeans.size();
+            for(int i = 0; i < size; i++){
+                work_announcement_adapter.remove(0);
+            }
+            infoBeans.clear();
+            work_announcement_adapter.notifyDataSetChanged();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     public AnnouncementFragment() {
 

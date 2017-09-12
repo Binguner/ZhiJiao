@@ -267,12 +267,30 @@ public class TYUTUtils {
                 .subscribe(new Subscriber<AnnouncementBean>() {
                     @Override
                     public void onCompleted() {
-
+//                        callBackSuccedLogin.callBackLoginStats(1);
+                        Log.d("adasadadaddsads","asd");
+                        /*try{
+                            callBackSuccedLogin.callBackLoginStats(1);
+                        }catch (Exception e){
+                            Log.d("adasadadaddsads",e.toString());
+                        }*/
+                        if(!NetworkUtils.isAvailable(context)){
+                            Log.d("adasadadaddsads","网没了");
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            callBackSuccedLogin.callBackLoginStats(1);
+                        }
                     }
+
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.d("adasadadaddsads",e.toString());
+                        if(!NetworkUtils.isAvailable(context)){
+                            Toast.makeText(context,"请检查网络",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -315,6 +333,11 @@ public class TYUTUtils {
                     @Override
                     public void onCompleted() {
                         Log.d("workTag", "Completed");
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            callBackSuccedLogin.callBackLoginStats(1);
+                        }
                     }
 
                     @Override
@@ -376,13 +399,22 @@ public class TYUTUtils {
                         Toast.makeText(context,"登陆成功",Toast.LENGTH_SHORT).show();
                         callBackSuccedLogin.callBackLoginStats(1);
                         //1 succeed    0 failed
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            callBackSuccedLogin.callBackLoginStats(1);
+                        }
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         callBackSuccedLogin.callBackLoginStats(0);
-                        Toast.makeText(context, "请检查用户名密码，服务器出错了..或者有可能教务处挂了，请重试，或者联系我⬇️ :(", Toast.LENGTH_SHORT).show();
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            Toast.makeText(context, "请检查用户名密码，服务器出错了..或者有可能教务处挂了，请重试，或者联系我⬇️ :(", Toast.LENGTH_SHORT).show();
+                        }
                         Log.d("LoginTag", "onError: " + e.toString());
                     }
 
@@ -414,13 +446,22 @@ public class TYUTUtils {
                             waveViews.get(i).setVisibility(View.INVISIBLE);
                         }
                         recyclerView.setVisibility(View.VISIBLE);
-                        callBackSuccedLogin.callBackLoginStats(1);
+
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            callBackSuccedLogin.callBackLoginStats(1);
+                        }
                         //callBackGrades.callBackGrades(1);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        }
                         Log.d("LoginTag", e.toString());
                         // callBackGrades.callBackGrades(0);
                     }
@@ -494,14 +535,22 @@ public class TYUTUtils {
                             waveViews.get(i).setVisibility(View.INVISIBLE);
                         }
                         recyclerView.setVisibility(View.VISIBLE);
-                        callBackSuccedLogin.callBackLoginStats(1);
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            callBackSuccedLogin.callBackLoginStats(1);
+                        }
 
                         Log.d("getClassTag", "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        }
                         Log.d("getClassTag", "onError: " + e.toString());
                     }
 
@@ -531,12 +580,21 @@ public class TYUTUtils {
                             waveViews.get(i).setVisibility(View.INVISIBLE);
                         }
                         recyclerView.setVisibility(View.VISIBLE);
-                        callBackSuccedLogin.callBackLoginStats(1);
+
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            callBackSuccedLogin.callBackLoginStats(1);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else {
+                            Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        }
                         Log.d("classArrayTag", "onError: " + e.getLocalizedMessage());
                         Log.d("classArrayTag", "onError: " + e.getMessage());
                         Log.d("classArrayTag", "onError: " + e.getCause());

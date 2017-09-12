@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Adapter.WorkInfo_Adapter;
+import com.example.binguner.zhijiao.CallBack.CallBackSuccedLogin;
 import com.example.binguner.zhijiao.Entity.WorkBean;
 import com.example.binguner.zhijiao.CallBack.CallBackType;
 import com.example.binguner.zhijiao.R;
@@ -53,8 +55,9 @@ public class WorkFragment extends Fragment {
     private static List<WorkBean.InfoBean> infoBeans = new ArrayList<>();
     private TYUTUtils tyutUtils;
     private int lastItemPosition;
-    private int page = 1;
-    private int type = 1;
+    private static int page = 1;
+    private static int type = 1;
+    private static int isFirstLoad = 1;
 
     //private MainActivity mainActivity = new MainActivity();
 
@@ -167,8 +170,21 @@ public class WorkFragment extends Fragment {
             @Override
             public void onRefresh() {
                 work_swiperefreshlayout.setRefreshing(true);
-                Snackbar.make(getView(), "刷新完毕", Snackbar.LENGTH_SHORT).show();
+                isFirstLoad = 1;
+                page = 1;
+                DeleteAllDatas();
                 work_swiperefreshlayout.setRefreshing(false);
+                //LoadDatas();
+                tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
+                    @Override
+                    public void callBackLoginStats(int stats) {
+                        if(stats == 1){
+                            Snackbar.make(getView(), "刷新完毕", Snackbar.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+
             }
         });
 
@@ -176,9 +192,10 @@ public class WorkFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastItemPosition + 3 >= linearLayoutManager.getItemCount()) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastItemPosition + 3 >= linearLayoutManager.getItemCount() /*&& infoBeans.size()>2*/) {
                     try {
-                          tyutUtils.getWorkInfo(type,++page);
+                          //tyutUtils.getWorkInfo(type,++page);
+                          LoadDatas();
                     } catch (Exception e) {
                         e.printStackTrace();
                         Snackbar.make(getView(), "加载失败。。。", Snackbar.LENGTH_SHORT).show();
@@ -215,11 +232,12 @@ public class WorkFragment extends Fragment {
                 //infoBeans.remove(i);
                 //删除 Adapter 中的数据
                 workInfo_adapter.remove(0);
-                Log.d("WorkFre","还有： "+infoBeans.size()+" 个");
+                //Log.d("WorkFre","还有： "+infoBeans.size()+" 个");
                 //workInfo_adapt
             }
             //删除 Fragment 中 list 中的数据
             infoBeans.clear();
+            workInfo_adapter.notifyDataSetChanged();
             //workInfo_adapter.clearAdapterDatas();
             //workInfo_adapter.removeAllDatas();
             //workInfo_adapter.notifyDataSetChanged();
@@ -250,27 +268,54 @@ public class WorkFragment extends Fragment {
         workInfo_adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         workInfo_adapter.isFirstOnly(true);
         //第一次加载数据
-        try {
+        /*try {
             tyutUtils.getWorkInfo(type,page);
         } catch (Exception e) {
             e.printStackTrace();
             //Snackbar.make(getView(), "加载失败，请检查网络。", Snackbar.LENGTH_SHORT).show();
+        }*/
+        LoadDatas();
+
+
+    }
+    /**
+     * 初次进入页面，上拉加载，并下拉刷新
+     * 更换 Type，page = 1，上拉加载，下拉刷新
+     * */
+
+    private void LoadDatas(){
+        if(isFirstLoad == 1) {
+            tyutUtils.getWorkInfo(type, page);
+            isFirstLoad = 0;
+        }else if(isFirstLoad == 0){
+            tyutUtils.getWorkInfo(type,page);
         }
-
-       /* workInfo_adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+        tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
             @Override
-            public void onLoadMoreRequested() {
-                work_recyclerview.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("LoadFist","LoadFirst~~~");
-                    }
-                },1000);
+            public void callBackLoginStats(int stats) {
+                if(stats == 1){
+                    page+=1;
+                    final Snackbar snackbar = Snackbar.make(getView(),"加载完毕",Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("Undo", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            snackbar.dismiss();
+                        }
+                    }).show();
+                }else if(stats == 2){
+                    final Snackbar snackbar = Snackbar.make(getView(),"请检查网络",Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("Check", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                            startActivity(intent);
+                            snackbar.dismiss();
+                        }
+                    }).show();
+                }
             }
-        },work_recyclerview);*/
-
-
-
+        });
+        Log.d("pageTag",page+"");
     }
 
     private void initId() {
@@ -292,7 +337,7 @@ public class WorkFragment extends Fragment {
     }
 
     public WorkFragment() {
-        // Required empty public constructor
+
     }
 
     public static WorkFragment newInstance() {

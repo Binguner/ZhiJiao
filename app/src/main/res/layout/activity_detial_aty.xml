@@ -48,10 +48,23 @@
 
     <com.example.binguner.zhijiao.View.WaveView
         android:id="@+id/detial_waveView"
-        app:waveView_color="@color/colorBlue"
+        app:waveView_color="@color/colorBlueTransparent"
+        app:waveView_jiaoSuDu="2"
+        app:waveView_zhengFu="30"
+        app:waveView_pianJu="0"
         app:layout_constraintTop_toBottomOf="@+id/detialToolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <com.example.binguner.zhijiao.View.WaveView
+        android:id="@+id/detial_waveView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:waveView_jiaoSuDu="1"
+        app:waveView_pianJu="0"
+        app:waveView_chuXiang="3"
+        app:waveView_zhengFu="30"
+        app:layout_constraintTop_toBottomOf="@+id/detialToolbar"
+        app:waveView_color="@color/colorBlueTransparent"/>
 
 
     <WebView

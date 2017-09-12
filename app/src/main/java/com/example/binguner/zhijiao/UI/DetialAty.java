@@ -25,13 +25,17 @@ import android.widget.Toolbar;
 import com.example.binguner.zhijiao.R;
 import com.example.binguner.zhijiao.View.WaveView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetialAty extends AppCompatActivity {
 
     private WebView detialWeview;
     private String url;
     private android.support.v7.widget.Toolbar detialToolbar;
     private ImageView detialsettingpoint,detial_back_btn;
-    private WaveView detial_waveView;
+    @BindView(R.id.detial_waveView) WaveView detial_waveView;
+    @BindView(R.id.detial_waveView2) WaveView detial_waveView2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +53,13 @@ public class DetialAty extends AppCompatActivity {
         setTheme(R.style.AppTheme);
 
         setContentView(R.layout.activity_detial_aty);
+        ButterKnife.bind(this);
         initId();
-        initViews();
+        try{
+            initViews();
+        }catch (Exception e){
+
+        }
         setListener();
     }
 
@@ -113,6 +122,7 @@ public class DetialAty extends AppCompatActivity {
                 super.onProgressChanged(view, newProgress);
                 if(newProgress == 100){
                     detial_waveView.setVisibility(View.GONE);
+                    detial_waveView2.setVisibility(View.GONE);
                     detialWeview.setVisibility(View.VISIBLE);
                 }
             }
@@ -123,6 +133,7 @@ public class DetialAty extends AppCompatActivity {
         //获取数据
         Bundle bundle = this.getIntent().getExtras();
         url = bundle.getString("url");
+        //url = "http://jwc.tyut.edu.cn/info_show.asp?id=1791&bigId=7&smallid=48";
         detialWeview.loadUrl("http://" + url);
         Log.d("urlTAg", url);
         detialWeview.getSettings().setJavaScriptEnabled(true);
@@ -142,7 +153,6 @@ public class DetialAty extends AppCompatActivity {
 
     private void initId() {
         detial_back_btn = findViewById(R.id.detial_back_btn);
-        detial_waveView = findViewById(R.id.detial_waveView);
         detialsettingpoint = findViewById(R.id.detialsettingpoint);
         detialToolbar = findViewById(R.id.detialToolbar);
         detialWeview = findViewById(R.id.detialWeview);

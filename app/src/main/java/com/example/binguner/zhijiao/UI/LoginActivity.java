@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
@@ -139,9 +140,18 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
                             if(stats == 0){
-                                Log.d("hrere","rerer");
                                 islongint_rot.setAnimation(null);
                                 islongint_rot.setVisibility(View.INVISIBLE);
+                            }else if(stats == 2){
+                                final Snackbar snackbar = Snackbar.make(getWindow().getDecorView(),"请检查网络",Snackbar.LENGTH_SHORT);
+                                snackbar.setAction("Check", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                        startActivity(intent);
+                                        snackbar.dismiss();
+                                    }
+                                }).show();
                             }
                         }
                     });
@@ -195,7 +205,7 @@ public class LoginActivity extends AppCompatActivity {
         username_textinputlayout.setHint("Username");
         ed_username.setTextColor(getResources().getColor(R.color.colorWhite));
         password_textinputlayout.setHint("Password");
-        getWindow().setBackgroundDrawable(getResources().getDrawable(R.mipmap.login_bg1));
+        //getWindow().setBackgroundDrawable(getResources().getDrawable(R.mipmap.login_bg1));
     }
 
     private void initId() {
