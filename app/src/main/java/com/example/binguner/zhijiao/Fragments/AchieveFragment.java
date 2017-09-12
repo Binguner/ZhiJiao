@@ -114,8 +114,8 @@ public class AchieveFragment extends Fragment {
 
                 }
                 Toast.makeText(getContext(),"成绩排名",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), DetialAty.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getContext(), DetialAty.class);
+                //startActivity(intent);
             }
         });
         btn_achieve_studentgpa.setOnClickListener(new View.OnClickListener() {

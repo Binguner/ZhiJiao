@@ -86,7 +86,7 @@ public class WorkFragment extends Fragment {
                     page = 1;
                     work_type_name.setText("固定岗位");
                     //Snackbar.make(getView(),"1",Snackbar.LENGTH_SHORT).show();
-                    tyutUtils.getWorkInfo(1,page);
+                    tyutUtils.getWorkInfo(1, page);
 
                     break;
                 case 2:
@@ -94,14 +94,14 @@ public class WorkFragment extends Fragment {
                     page = 1;
                     work_type_name.setText("临时岗位");
                     //Snackbar.make(getView(),"2",Snackbar.LENGTH_SHORT).show();
-                    tyutUtils.getWorkInfo(2,page);
+                    tyutUtils.getWorkInfo(2, page);
                     DeleteAllDatas();
                     break;
                 case 3:
                     DeleteAllDatas();
                     page = 1;
                     work_type_name.setText("专业技术岗位");
-                    tyutUtils.getWorkInfo(3,page);
+                    tyutUtils.getWorkInfo(3, page);
                     //Snackbar.make(getView(),"3",Snackbar.LENGTH_SHORT).show();
 
                     break;
@@ -109,7 +109,7 @@ public class WorkFragment extends Fragment {
                     DeleteAllDatas();
                     page = 1;
                     work_type_name.setText("校外岗位");
-                    tyutUtils.getWorkInfo(4,page);
+                    tyutUtils.getWorkInfo(4, page);
                     //Snackbar.make(getView(),"4",Snackbar.LENGTH_SHORT).show();
 
                     break;
@@ -119,38 +119,48 @@ public class WorkFragment extends Fragment {
         }
     };
 
-    private void setType(int type){
+    private void setType(int type) {
         this.type = type;
     }
+
     private void setListener() {
         workInfo_adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, final View view, int position) {
 
 
-                if(infoBeans.get(position).getUrl().isEmpty()||infoBeans.get(position).getApplyStatus().contains("截止")){
-                    Snackbar.make(getView(), "此招聘已截止", Snackbar.LENGTH_SHORT).show();
+                if (infoBeans.get(position).getUrl().isEmpty() || infoBeans.get(position).getApplyStatus().contains("截止")) {
+                    final Snackbar snackbar = Snackbar.make(getView(), "此招聘已截止", Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("Undo", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            snackbar.dismiss();
+                        }
+                    }).show();
+                    Log.d("clckc","Haven't stop");
+                } else {
+                    Log.d("clckc","have is stop");
+                    final Intent intent = new Intent(getContext(), DetialAty.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", infoBeans.get(position).getUrl());
+                    intent.putExtras(bundle);
+                    CircularAnim.hide(view)
+                            .duration(300)
+                            .go(new CircularAnim.OnAnimationEndListener() {
+                                @Override
+                                public void onAnimationEnd() {
+                                    CircularAnim.fullActivity(getActivity(), view)
+                                            .colorOrImageRes(R.color.colorBlue)
+                                            .go(new CircularAnim.OnAnimationEndListener() {
+                                                @Override
+                                                public void onAnimationEnd() {
+                                                    startActivity(intent);
+                                                    view.setVisibility(View.VISIBLE);
+                                                }
+                                            });
+                                }
+                            });
                 }
-                final Intent intent = new Intent(getContext(), DetialAty.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("url",infoBeans.get(position).getUrl());
-                intent.putExtras(bundle);
-                CircularAnim.hide(view)
-                        .duration(300)
-                        .go(new CircularAnim.OnAnimationEndListener() {
-                            @Override
-                            public void onAnimationEnd() {
-                                CircularAnim.fullActivity(getActivity(),view)
-                                        .colorOrImageRes(R.color.colorBlue)
-                                        .go(new CircularAnim.OnAnimationEndListener() {
-                                            @Override
-                                            public void onAnimationEnd() {
-                                                startActivity(intent);
-                                                view.setVisibility(View.VISIBLE);
-                                            }
-                                        });
-                            }
-                        });
 
             }
         });
@@ -178,7 +188,7 @@ public class WorkFragment extends Fragment {
                 tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
                     @Override
                     public void callBackLoginStats(int stats) {
-                        if(stats == 1){
+                        if (stats == 1) {
                             Snackbar.make(getView(), "刷新完毕", Snackbar.LENGTH_SHORT).show();
 
                         }
@@ -194,8 +204,8 @@ public class WorkFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && lastItemPosition + 3 >= linearLayoutManager.getItemCount() /*&& infoBeans.size()>2*/) {
                     try {
-                          //tyutUtils.getWorkInfo(type,++page);
-                          LoadDatas();
+                        //tyutUtils.getWorkInfo(type,++page);
+                        LoadDatas();
                     } catch (Exception e) {
                         e.printStackTrace();
                         Snackbar.make(getView(), "加载失败。。。", Snackbar.LENGTH_SHORT).show();
@@ -209,7 +219,6 @@ public class WorkFragment extends Fragment {
                 lastItemPosition = linearLayoutManager.findLastVisibleItemPosition();
             }
         });
-
 
 
     }
@@ -227,8 +236,8 @@ public class WorkFragment extends Fragment {
                 //workInfo_adapter.removeHeaderView(getView());
             }*/
             int size = infoBeans.size();
-            Log.d("WorkFre","一共有："+size+"个");
-            for(int i =0;i<size;i++){
+            Log.d("WorkFre", "一共有：" + size + "个");
+            for (int i = 0; i < size; i++) {
                 //infoBeans.remove(i);
                 //删除 Adapter 中的数据
                 workInfo_adapter.remove(0);
@@ -242,14 +251,14 @@ public class WorkFragment extends Fragment {
             //workInfo_adapter.removeAllDatas();
             //workInfo_adapter.notifyDataSetChanged();
             //work_recyclerview.removeAllViews();
-           // Log.d("WorkFre", infoBeans.size() + "");
-           // workInfo_adapter.notifyDataSetChanged();
+            // Log.d("WorkFre", infoBeans.size() + "");
+            // workInfo_adapter.notifyDataSetChanged();
             //workInfo_adapter.notifyItemRangeRemoved(0, infoBeans.size());
 
             //infoBeans.clear();
 
             //列表批量删除的动画效果
-           // workInfo_adapter.notifyItemInserted(infoBeans.size());
+            // workInfo_adapter.notifyItemInserted(infoBeans.size());
         } catch (Exception e) {
             Log.d("WorkFre", e.toString());
         }
@@ -263,7 +272,7 @@ public class WorkFragment extends Fragment {
         work_recyclerview.setHasFixedSize(true);
         work_recyclerview.setAdapter(workInfo_adapter);
         work_swiperefreshlayout.setColorSchemeColors(getResources().getColor(R.color.colorRed), getResources().getColor(R.color.colorYellow), getResources().getColor(R.color.colorBlue), getResources().getColor(R.color.colorGreen));
-        View view = getLayoutInflater().inflate(R.layout.activity_footer_view,null);
+        View view = getLayoutInflater().inflate(R.layout.activity_footer_view, null);
         workInfo_adapter.addFooterView(view);
         workInfo_adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         workInfo_adapter.isFirstOnly(true);
@@ -278,32 +287,33 @@ public class WorkFragment extends Fragment {
 
 
     }
+
     /**
      * 初次进入页面，上拉加载，并下拉刷新
      * 更换 Type，page = 1，上拉加载，下拉刷新
-     * */
+     */
 
-    private void LoadDatas(){
-        if(isFirstLoad == 1) {
+    private void LoadDatas() {
+        if (isFirstLoad == 1) {
             tyutUtils.getWorkInfo(type, page);
             isFirstLoad = 0;
-        }else if(isFirstLoad == 0){
-            tyutUtils.getWorkInfo(type,page);
+        } else if (isFirstLoad == 0) {
+            tyutUtils.getWorkInfo(type, page);
         }
         tyutUtils.setCallBack(null, null, new CallBackSuccedLogin() {
             @Override
             public void callBackLoginStats(int stats) {
-                if(stats == 1){
-                    page+=1;
-                    final Snackbar snackbar = Snackbar.make(getView(),"加载完毕",Snackbar.LENGTH_SHORT);
+                if (stats == 1) {
+                    page += 1;
+                    final Snackbar snackbar = Snackbar.make(getView(), "加载完毕", Snackbar.LENGTH_SHORT);
                     snackbar.setAction("Undo", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             snackbar.dismiss();
                         }
                     }).show();
-                }else if(stats == 2){
-                    final Snackbar snackbar = Snackbar.make(getView(),"请检查网络",Snackbar.LENGTH_SHORT);
+                } else if (stats == 2) {
+                    final Snackbar snackbar = Snackbar.make(getView(), "请检查网络", Snackbar.LENGTH_SHORT);
                     snackbar.setAction("Check", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -315,7 +325,7 @@ public class WorkFragment extends Fragment {
                 }
             }
         });
-        Log.d("pageTag",page+"");
+        Log.d("pageTag", page + "");
     }
 
     private void initId() {
@@ -323,7 +333,7 @@ public class WorkFragment extends Fragment {
         workInfo_adapter = new WorkInfo_Adapter(R.layout.card_layout_work_info, infoBeans, getContext());
         work_swiperefreshlayout = getActivity().findViewById(R.id.work_swiperefreshlayout);
         work_recyclerview = getActivity().findViewById(R.id.work_recyclerview);
-        tyutUtils = new TYUTUtils(workInfo_adapter,getContext());
+        tyutUtils = new TYUTUtils(workInfo_adapter, getContext());
     }
 
     public static void addWorkDatas(List<WorkBean.InfoBean> minfoBeans) {

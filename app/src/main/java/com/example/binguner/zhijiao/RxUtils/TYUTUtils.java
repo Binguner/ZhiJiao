@@ -342,7 +342,12 @@ public class TYUTUtils {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+
+                        if(!NetworkUtils.isAvailable(context)){
+                            callBackSuccedLogin.callBackLoginStats(2);
+                        }else{
+                            Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
+                        }
                         Log.d("workTag", "onError : " + e.toString());
                     }
 
@@ -556,14 +561,8 @@ public class TYUTUtils {
 
                     @Override
                     public void onNext(ClassBean classBean) {
-                        Log.d("getClassTag", classBean.getTable().get(0).getMonday());
-                        Log.d("getClassTag", classBean.getTable().get(1).getMonday());
                         ClassTable.addClassTableDatas(classBean.getTable());
-                        Log.d("duck", "dsds");
-
-                        Log.d("duck", "ClassTable.getSize()" + ClassTable.getSize());
                         baseQuickAdapter1.notifyItemInserted(ClassTable.getSize());
-                        Log.d("duck", "addad");
                     }
                 });
     }
