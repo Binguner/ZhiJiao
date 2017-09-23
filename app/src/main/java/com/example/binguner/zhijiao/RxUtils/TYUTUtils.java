@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.binguner.zhijiao.Adapter.ClassArrayAdapter;
+import com.example.binguner.zhijiao.Adapter.Class_Table_Adapter;
 import com.example.binguner.zhijiao.CallBack.CallBackGrades;
 import com.example.binguner.zhijiao.CallBack.CallBackSuccedLogin;
 import com.example.binguner.zhijiao.Entity.AnnouncementBean;
@@ -31,6 +32,7 @@ import com.example.binguner.zhijiao.Services.TYUTservices;
 import com.example.binguner.zhijiao.UI.ClassArray;
 import com.example.binguner.zhijiao.UI.ClassTable;
 import com.example.binguner.zhijiao.UI.LoginActivity;
+import com.example.binguner.zhijiao.UI.NewClassTable;
 import com.example.binguner.zhijiao.UI.SearchGrades;
 import com.example.binguner.zhijiao.Utils.AddCookiesInterceptor;
 import com.example.binguner.zhijiao.Utils.NetworkUtils;
@@ -88,6 +90,7 @@ public class TYUTUtils {
     private List<WaveView> waveViews = new ArrayList<>();
     //private WaveView waveView;
     private RecyclerView recyclerView;
+    private Class_Table_Adapter class_table_adapter;
     // private String BigcookleStr;
     private static UserUtil userUtil = new UserUtil();
 
@@ -104,6 +107,13 @@ public class TYUTUtils {
     public TYUTUtils(BaseQuickAdapter baseQuickAdapter, Context context,List<WaveView> waveViews, RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         this.baseQuickAdapter1 = baseQuickAdapter;
+        this.waveViews = waveViews;
+        this.context = context;
+    }
+
+    public TYUTUtils(Class_Table_Adapter class_table_adapter, Context context,List<WaveView> waveViews, RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+        this.class_table_adapter = class_table_adapter;
         this.waveViews = waveViews;
         this.context = context;
     }
@@ -536,33 +546,41 @@ public class TYUTUtils {
                 .subscribe(new Subscriber<ClassBean>() {
                     @Override
                     public void onCompleted() {
-                        for(int i = 0; i< waveViews.size();i++){
+                        /*for(int i = 0; i< waveViews.size();i++){
                             waveViews.get(i).setVisibility(View.INVISIBLE);
                         }
-                        recyclerView.setVisibility(View.VISIBLE);
-                        if(!NetworkUtils.isAvailable(context)){
-                            callBackSuccedLogin.callBackLoginStats(2);
-                        }else {
+                        recyclerView.setVisibility(View.VISIBLE);*/
+                       // if(!NetworkUtils.isAvailable(context)){
+                         //   callBackSuccedLogin.callBackLoginStats(2);
+                        //}else {
                             callBackSuccedLogin.callBackLoginStats(1);
-                        }
+                       // }
 
-                        Log.d("getClassTag", "onCompleted");
+                        //Log.d("getClassTag", "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if(!NetworkUtils.isAvailable(context)){
+                       /* if(!NetworkUtils.isAvailable(context)){
                             callBackSuccedLogin.callBackLoginStats(2);
                         }else {
                             Toast.makeText(context, "加载失败，请重试 :)", Toast.LENGTH_SHORT).show();
                         }
-                        Log.d("getClassTag", "onError: " + e.toString());
+                        Log.d("getClassTag", "onError: " + e.toString());*/
                     }
 
                     @Override
                     public void onNext(ClassBean classBean) {
+                        NewClassTable.setBeans(classBean.getTable());
+                        /*class_table_adapter.addBeans(classBean.getTable());
                         ClassTable.addClassTableDatas(classBean.getTable());
-                        baseQuickAdapter1.notifyItemInserted(ClassTable.getSize());
+                        Log.d("ClassTableTafg",classBean.getTable().get(0).getMonday());
+                        Log.d("ClassTableTafg",classBean.getTable().get(0).getWednesday().toString());
+                        if(classBean.getTable().get(0).getSunday().contains("   ")){
+                            Log.d("ClassTableTafg","isEmpty");
+                        }
+                        class_table_adapter.notifyDataSetChanged();
+                        class_table_adapter.notifyItemInserted(classBean.getTable().size());*/
                     }
                 });
     }
@@ -603,13 +621,13 @@ public class TYUTUtils {
 
                     @Override
                     public void onNext(ClassArrangeBean classArrangeBean) {
-                        Log.d("holyshirt", "fitst");
+                        //Log.d("holyshirt", "fitst");
                         classArrayAdapter.addBeans(classArrangeBean.getInfo());
                         classArrayAdapter.notifyDataSetChanged();
                         //ClassArray.addClassArrayDatas(classArrangeBean.getInfo());
-                        Log.d("holyshirt", "beforeNotifyItemInsered");
+                        //Log.d("holyshirt", "beforeNotifyItemInsered");
                         classArrayAdapter.notifyItemInserted(classArrangeBean.getInfo().size());
-                        Log.d("holyshirt", "afterNotifyItemInsered:" + ClassArray.getSize());
+                        //Log.d("holyshirt", "afterNotifyItemInsered:" + ClassArray.getSize());
                     }
                 });
     }

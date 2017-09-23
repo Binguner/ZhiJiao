@@ -4,7 +4,7 @@
         android:left="2dp"
         android:right="2dp"
         android:top="2dp"/>
-    <solid android:color="#4ae5af" />
+    <solid android:color="#fcb84f" />
     <corners android:radius="@dimen/dp_4"/>
 
 

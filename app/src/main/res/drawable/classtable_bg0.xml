@@ -4,7 +4,7 @@
         android:left="2dp"
         android:right="2dp"
         android:top="2dp"/>
-    <solid android:color="#80DEEA" />
+    <solid android:color="#f2f6f8" />
 
 
 

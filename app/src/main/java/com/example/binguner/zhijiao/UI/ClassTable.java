@@ -105,8 +105,6 @@ public class ClassTable extends AppCompatActivity {
     }
 
     public static int getSize(){
-        int i = tableBeans.size();
-        Log.d("duck",i+"");
         return tableBeans.size();
 
     }
@@ -132,7 +130,7 @@ public class ClassTable extends AppCompatActivity {
 
     @OnClick(R.id.class_table_back)
     void back(){
-        finish();;
+        finish();
     }
 
     @OnClick(R.id.class_table_refresh)
@@ -147,6 +145,7 @@ public class ClassTable extends AppCompatActivity {
             for(int i = 0;i<size;i++){
                 class_table_adapter.remove(0);
             }
+            class_table_adapter.deleteAllBeans();
             tableBeans.clear();
         }catch (Exception e){
             e.printStackTrace();

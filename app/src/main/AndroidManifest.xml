@@ -33,7 +33,8 @@
         <activity android:name=".UI.SearchGrades" />
         <activity android:name=".UI.ClassTable" />
         <activity android:name=".UI.ClassTableDetial" />
-        <activity android:name=".UI.ClassArray"></activity>
+        <activity android:name=".UI.ClassArray" />
+        <activity android:name=".UI.NewClassTable"></activity>
     </application>
 
 </manifest>

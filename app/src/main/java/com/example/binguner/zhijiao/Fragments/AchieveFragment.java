@@ -25,6 +25,7 @@ import com.example.binguner.zhijiao.UI.ClassTable;
 import com.example.binguner.zhijiao.UI.DetialAty;
 import com.example.binguner.zhijiao.UI.FooterView;
 import com.example.binguner.zhijiao.UI.LoginActivity;
+import com.example.binguner.zhijiao.UI.NewClassTable;
 import com.example.binguner.zhijiao.UI.SearchGrades;
 
 import java.util.regex.Matcher;
@@ -161,6 +162,8 @@ public class AchieveFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(),"一键评教",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), NewClassTable.class);
+                startActivity(intent);
             }
         });
         btn_achieve_studentinfo.setOnClickListener(new View.OnClickListener() {

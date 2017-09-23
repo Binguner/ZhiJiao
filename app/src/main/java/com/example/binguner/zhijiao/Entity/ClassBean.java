@@ -117,4 +117,11 @@ public class ClassBean {
             this.tuesday = tuesday;
         }
     }
+
+    @Override
+    public String toString() {
+        return "ClassBean{" +
+                "table=" + table +
+                '}';
+    }
 }
