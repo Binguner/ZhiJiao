@@ -137,9 +137,9 @@ public class WorkFragment extends Fragment {
                             snackbar.dismiss();
                         }
                     }).show();
-                    Log.d("clckc","Haven't stop");
+                    //Log.d("clckc","Haven't stop");
                 } else {
-                    Log.d("clckc","have is stop");
+                    //Log.d("clckc","have is stop");
                     final Intent intent = new Intent(getContext(), DetialAty.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("url", infoBeans.get(position).getUrl());
@@ -236,7 +236,7 @@ public class WorkFragment extends Fragment {
                 //workInfo_adapter.removeHeaderView(getView());
             }*/
             int size = infoBeans.size();
-            Log.d("WorkFre", "一共有：" + size + "个");
+            //Log.d("WorkFre", "一共有：" + size + "个");
             for (int i = 0; i < size; i++) {
                 //infoBeans.remove(i);
                 //删除 Adapter 中的数据

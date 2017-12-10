@@ -34,7 +34,7 @@
         <activity android:name=".UI.ClassTable" />
         <activity android:name=".UI.ClassTableDetial" />
         <activity android:name=".UI.ClassArray" />
-        <activity android:name=".UI.NewClassTable"></activity>
+        <activity android:name=".UI.NewClassTable" />
     </application>
 
 </manifest>

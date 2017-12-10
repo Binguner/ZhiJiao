@@ -306,11 +306,6 @@ public class TYUTUtils {
                     @Override
                     public void onNext(AnnouncementBean announcementBean) {
                         try {
-                            //Log.d("TESTTAG", announcementBean.getStatus());
-                            //Log.d("TESTTAG", announcementBean.getInfo().get(0).getTitle());
-                            //Log.d("TESTTAG", announcementBean.getInfo().get(0).getUpdate());
-                            //Log.d("TESTTAG", announcementBean.getInfo().get(1).getUpdate());
-
                             AnnouncementFragment.AddDatas(announcementBean.getInfo());
                             baseQuickAdapter.notifyDataSetChanged();
                             baseQuickAdapter.notifyItemInserted(AnnouncementFragment.getSize());
@@ -630,6 +625,13 @@ public class TYUTUtils {
                         //Log.d("holyshirt", "afterNotifyItemInsered:" + ClassArray.getSize());
                     }
                 });
+    }
+
+    public static String addFree(String s){
+
+        String s1 = new String();
+
+        return s1;
     }
 
 

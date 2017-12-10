@@ -4,129 +4,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_constraintlayout"
     android:layout_width="match_parent"
-    android:background="@mipmap/login_bg3"
     android:layout_height="match_parent"
+    android:background="@mipmap/login_bg3"
     tools:context="com.example.binguner.zhijiao.UI.LoginActivity">
 
 
-
     <TextView
-        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
-        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
-        app:layout_constraintTop_toTopOf="@+id/login_constraintlayout"
-        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
-        app:layout_constraintVertical_bias="0.15"
         android:layout_width="wrap_content"
-        app:layout_constraintHorizontal_bias="0.6"
-        android:textColor="@color/colorWhite"
         android:layout_height="wrap_content"
+        android:text="Welecome！"
         android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:text="Welecome！"/>
+        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
+        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
+        app:layout_constraintTop_toTopOf="@+id/login_constraintlayout"
+        app:layout_constraintVertical_bias="0.15" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/username_textinputlayout"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintVertical_bias="0.30"
-        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
-        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
-        app:layout_constraintTop_toTopOf="@+id/login_constraintlayout"
-        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
         android:layout_width="match_parent"
-        app:counterEnabled="true"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:textColorHint="@color/colorWhite"
-        app:hintTextAppearance="@style/hintAppearance"
+        app:counterEnabled="true"
         app:counterMaxLength="10"
         app:counterTextAppearance="@style/hintAppearance"
-        android:layout_height="wrap_content">
+        app:hintTextAppearance="@style/hintAppearance"
+        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
+        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
+        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
+        app:layout_constraintTop_toTopOf="@+id/login_constraintlayout"
+        app:layout_constraintVertical_bias="0.30">
+
         <EditText
             android:id="@+id/ed_username"
-            android:inputType="number"
-            android:theme="@style/MyEditTextStyle"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
-            />
+            android:inputType="number"
+
+            android:theme="@style/MyEditTextStyle" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/password_textinputlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
+        android:textColorHint="@color/colorWhite"
+        app:hintTextAppearance="@style/hintAppearance"
+        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
+        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
+        app:layout_constraintTop_toBottomOf="@+id/username_textinputlayout"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/colorWhite"
-        app:passwordToggleTintMode="src_in"
-        android:layout_marginEnd="20dp"
-        android:textColorHint="@color/colorWhite"
-        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
-        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
-        app:layout_constraintTop_toBottomOf="@+id/username_textinputlayout"
-        app:hintTextAppearance="@style/hintAppearance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:passwordToggleTintMode="src_in">
+
         <EditText
             android:id="@+id/ed_password"
-            android:theme="@style/MyEditTextStyle"
-            android:textColor="@color/colorWhite"
-            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeActionId="@+id/loginbtn"
             android:imeOptions="actionGo"
-            />
+            android:inputType="textPassword"
+            android:textColor="@color/colorWhite"
+            android:theme="@style/MyEditTextStyle" />
     </android.support.design.widget.TextInputLayout>
+
     <Button
         android:id="@+id/loginbtn"
-        app:layout_constraintTop_toBottomOf="@+id/password_textinputlayout"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="10dp"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"
-        android:foreground="?attr/selectableItemBackground"
-        android:background="@drawable/login_btn_bg"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="@id/password_textinputlayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Login"/>
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_btn_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="@id/password_textinputlayout"
+        app:layout_constraintTop_toBottomOf="@+id/password_textinputlayout" />
 
     <Button
         android:id="@+id/canclebtn"
-        app:layout_constraintTop_toBottomOf="@+id/password_textinputlayout"
-        android:layout_marginTop="30dp"
-        android:foreground="?attr/selectableItemBackground"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textColor="@color/colorWhite"
-        android:textAllCaps="false"
-        android:background="@drawable/login_btn_bg"
-        app:layout_constraintRight_toLeftOf="@+id/loginbtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Cancle"/>
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_btn_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="Cancle"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintRight_toLeftOf="@+id/loginbtn"
+        app:layout_constraintTop_toBottomOf="@+id/password_textinputlayout" />
 
     <TextView
         android:id="@+id/login_findMe"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
-        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout"
-        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
-        android:text="联系我们"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-        android:visibility="invisible"
-        android:id="@+id/islongint_rot"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/isloging_blue_128"/>
+        android:layout_marginBottom="10dp"
+        android:text="联系我们"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@+id/login_constraintlayout"
+        app:layout_constraintEnd_toEndOf="@+id/login_constraintlayout"
+        app:layout_constraintStart_toStartOf="@+id/login_constraintlayout" />
+
+    <ImageView
+        android:id="@+id/islongint_rot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/isloging_blue_128"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
 
 </android.support.constraint.ConstraintLayout>

@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_findMe)
     void findMe(View v){
-        openQQ(v,"478718805");
+        openQQ(v,"819985138");
     }
 
     private void openQQ(View view,@Nullable String qqNum){

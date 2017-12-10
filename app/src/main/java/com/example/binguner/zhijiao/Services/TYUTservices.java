@@ -24,7 +24,7 @@ public interface TYUTservices {
 
     //http://tyut.ngrok.cc/notice/list
     //获取学校公告
-    @GET("http://tyut.ngrok.cc/notice/list/{page}")
+    @GET("http://tyut.free.ngrok.cc/notice/list/{page}")
     Observable<AnnouncementBean> GetAnnouncement(@Path("page") int page);
 
     //http://helpstudy.ngrok.cc/help/list1
@@ -36,29 +36,29 @@ public interface TYUTservices {
     *  4 校外岗
     *
     * */
-    @GET("http://helpstudy.ngrok.cc/help/list{type}/{page}")
+    @GET("http://helpstudy.free.ngrok.cc/help/list{type}/{page}")
     Observable<WorkBean> GetWorkInfo(@Path("type") int type,@Path("page") int page);
 
 
     //http://grade.ngrok.cc/login
     @FormUrlEncoded
-    @POST("http://grade.ngrok.cc/login")
+    @POST("http://grade.free.ngrok.cc/login")
     Observable<LoginBean> FirsrLogin(@Field("username") String username,@Field("password") String password);
 
     //http://grade.ngrok.cc/grade
     @FormUrlEncoded
-    @POST("http://grade.ngrok.cc/grade")
+    @POST("http://grade.free.ngrok.cc/grade")
     Observable<GradesBean> GetGrades(@Field("username") String username,@Field("password") String password/*@Header("Set-Cookie") String cookie */   /*@Path("username"*/);/* String username*/
 
     //获取课表
     //http://grade.ngrok.cc/class
     @FormUrlEncoded
-    @POST("http://grade.ngrok.cc/class")
+    @POST("http://grade.free.ngrok.cc/class")
     Observable<ClassBean> GetClass(@Field("username") String username,@Field("password") String password);
 
     //获取课表详情
     //http://grade.ngrok.cc/classArrange
     @FormUrlEncoded
-    @POST("http://grade.ngrok.cc/classArrange")
+    @POST("http://grade.free.ngrok.cc/classArrange")
     Observable<ClassArrangeBean>  GetClassArray(@Field("username") String username,@Field("password") String password);
 }
